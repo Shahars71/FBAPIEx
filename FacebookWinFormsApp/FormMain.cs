@@ -49,13 +49,18 @@ namespace BasicFacebookFeatures
                         Console.WriteLine(post.Caption);
 
                         PostViewer postViewer = new PostViewer();
-                        tabPosts.Controls.Add(postViewer);
+                        flpPosts.Controls.Add(postViewer);
                     }
                     catch (Exception ex)
                     {
                         Console.WriteLine($"Error getting post: {post.Caption}\n{ex.Message}");
                     }
                 }
+            }
+
+            else
+            {
+                errorHandle(flpPosts);
             }
         }
 
@@ -86,12 +91,8 @@ namespace BasicFacebookFeatures
             }
             catch
             {
-                Label errorLabel = new Label();
-                errorLabel.Text = "[Data unavailable]";
-                flpPhotos.Controls.Add(errorLabel);
+                errorHandle(flpPhotos);
             }
-
-
         }
 
         private void btnPosts_Click(object sender, EventArgs e)
@@ -121,7 +122,7 @@ namespace BasicFacebookFeatures
                             try
                             {
                                 FriendBox friendBox = new FriendBox(friend);
-                                tabFriends.Controls.Add(friendBox);
+                                flpFriends.Controls.Add(friendBox);
                             }
                             catch (Exception ex)
                             {
@@ -133,16 +134,13 @@ namespace BasicFacebookFeatures
                     }
                     catch (Exception ex)
                     {
-                        Console.WriteLine($"Error getting friendList: {friendList.Name}");
+                        errorHandle(flpFriends);
                     }
                 }
             }
             catch (Exception ex)
             {
-                Console.WriteLine($"Error getting Data: {ex.Message}");
-                Label errLabel = new Label();
-                errLabel.Text = "Error getting Friend data!";
-                tabFriends.Controls.Add( errLabel );
+                errorHandle(flpFriends);
             }
         }
 
@@ -151,5 +149,102 @@ namespace BasicFacebookFeatures
             FormProfile formProfile = new FormProfile(m_LoggedInUser);
             formProfile.ShowDialog();
         }
+
+        private void btnVideos_Click(object sender, EventArgs e)
+        {
+            tabControlMain.SelectedTab = tabVideos;
+            fillVideosTab();
+
+        }
+
+        private void fillVideosTab()
+        {
+            
+            try
+            {
+                if (m_LoggedInUser.Videos.Count > 0)
+                {
+                    foreach (Video vid in m_LoggedInUser.Videos)
+                    {
+                        VideoBox videoBox = new VideoBox(vid);
+                        flpVideos.Controls.Add(videoBox);
+                    }
+                }
+                else
+                {
+                    errorHandle(flpVideos);
+                }
+            }
+            catch
+            {
+                errorHandle(flpVideos);
+            }
+        }
+
+        private void errorHandle(FlowLayoutPanel i_flp)
+        {
+            Label errorLabel = new Label();
+            errorLabel.Text = "[Data unavailable]";
+            i_flp.Controls.Add(errorLabel);
+        }
+
+        private void btnPages_Click(object sender, EventArgs e)
+        {
+            tabControlMain.SelectedTab = tabPages;
+            fillPagesTab();
+        }
+
+        private void fillPagesTab()
+        {
+            try
+            {
+                if (m_LoggedInUser.LikedPages.Count > 0)
+                {
+                    foreach (Page page in m_LoggedInUser.LikedPages)
+                    {
+                        PageBox pageBox = new PageBox(page);
+                        flpPages.Controls.Add(pageBox);
+                    }
+                }
+                else
+                {
+                    errorHandle(flpPages);
+                }
+            }
+            catch
+            {
+                errorHandle(flpPages);
+            }
+        }
+
+        private void btnGroups_Click(object sender, EventArgs e)
+        {
+            tabControlMain.SelectedTab = tabGroups;
+            fillGroupsTab();
+        }
+
+        private void fillGroupsTab()
+        {
+            try
+            {
+                if (m_LoggedInUser.Groups.Count > 0)
+                {
+                    foreach (Group group in m_LoggedInUser.Groups)
+                    {
+                        GroupBox groupBox = new GroupBox(group);
+                        flpGroups.Controls.Add(groupBox);
+                    }
+                }
+                else
+                {
+                    errorHandle(flpGroups);
+                }
+            }
+            catch
+            {
+                errorHandle(flpGroups);
+            }
+        }
+
     }
 }

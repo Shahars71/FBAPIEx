@@ -123,6 +123,24 @@
     <Compile Include="FriendBox.Designer.cs">
       <DependentUpon>FriendBox.cs</DependentUpon>
     </Compile>
+    <Compile Include="PageBox.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="PageBox.Designer.cs">
+      <DependentUpon>PageBox.cs</DependentUpon>
+    </Compile>
+    <Compile Include="GroupBox.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="GroupBox.Designer.cs">
+      <DependentUpon>GroupBox.cs</DependentUpon>
+    </Compile>
+    <Compile Include="VideoBox.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="VideoBox.Designer.cs">
+      <DependentUpon>VideoBox.cs</DependentUpon>
+    </Compile>
     <EmbeddedResource Include="FormLogin.resx">
       <DependentUpon>FormLogin.cs</DependentUpon>
     </EmbeddedResource>
@@ -134,6 +152,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="FriendBox.resx">
       <DependentUpon>FriendBox.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="GroupBox.resx">
+      <DependentUpon>GroupBox.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="PageBox.resx">
+      <DependentUpon>PageBox.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="PostViewer.resx">
       <DependentUpon>PostViewer.cs</DependentUpon>
@@ -148,6 +172,9 @@
       <DependentUpon>Resources.resx</DependentUpon>
       <DesignTime>True</DesignTime>
     </Compile>
+    <EmbeddedResource Include="VideoBox.resx">
+      <DependentUpon>VideoBox.cs</DependentUpon>
+    </EmbeddedResource>
     <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
