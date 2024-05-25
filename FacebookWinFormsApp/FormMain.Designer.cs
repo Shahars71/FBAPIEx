@@ -49,8 +49,6 @@
             this.flpPages = new System.Windows.Forms.FlowLayoutPanel();
             this.tabGroups = new System.Windows.Forms.TabPage();
             this.flpGroups = new System.Windows.Forms.FlowLayoutPanel();
-            this.picBoxProfilePic = new System.Windows.Forms.PictureBox();
-            this.picBoxBorder = new System.Windows.Forms.PictureBox();
             this.btnPostStatus = new System.Windows.Forms.Button();
             this.btnDateFilter = new System.Windows.Forms.Button();
             this.panel1 = new System.Windows.Forms.Panel();
@@ -58,6 +56,14 @@
             this.dtpPostDateFrom = new System.Windows.Forms.DateTimePicker();
             this.lblTo = new System.Windows.Forms.Label();
             this.dtpPostDateTo = new System.Windows.Forms.DateTimePicker();
+            this.picBoxProfilePic = new System.Windows.Forms.PictureBox();
+            this.picBoxBorder = new System.Windows.Forms.PictureBox();
+            this.btnFilterByDatePhotos = new System.Windows.Forms.Button();
+            this.label1 = new System.Windows.Forms.Label();
+            this.label2 = new System.Windows.Forms.Label();
+            this.panel2 = new System.Windows.Forms.Panel();
+            this.dtpFromPhotos = new System.Windows.Forms.DateTimePicker();
+            this.dtpToPhotos = new System.Windows.Forms.DateTimePicker();
             this.flpMainControls.SuspendLayout();
             this.tabControlMain.SuspendLayout();
             this.tabPosts.SuspendLayout();
@@ -66,9 +72,10 @@
             this.tabVideos.SuspendLayout();
             this.tabPages.SuspendLayout();
             this.tabGroups.SuspendLayout();
+            this.panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.picBoxProfilePic)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.picBoxBorder)).BeginInit();
-            this.panel1.SuspendLayout();
+            this.panel2.SuspendLayout();
             this.SuspendLayout();
             // 
             // labelUserName
@@ -228,6 +235,9 @@
             // 
             // tabPhotos
             // 
+            this.tabPhotos.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(147)))), ((int)(((byte)(193)))), ((int)(((byte)(244)))));
+            this.tabPhotos.Controls.Add(this.btnFilterByDatePhotos);
+            this.tabPhotos.Controls.Add(this.panel2);
             this.tabPhotos.Controls.Add(this.flpPhotos);
             this.tabPhotos.Location = new System.Drawing.Point(4, 24);
             this.tabPhotos.Name = "tabPhotos";
@@ -235,16 +245,14 @@
             this.tabPhotos.Size = new System.Drawing.Size(901, 422);
             this.tabPhotos.TabIndex = 1;
             this.tabPhotos.Text = "Photos";
-            this.tabPhotos.UseVisualStyleBackColor = true;
             // 
             // flpPhotos
             // 
             this.flpPhotos.AutoScroll = true;
             this.flpPhotos.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(147)))), ((int)(((byte)(193)))), ((int)(((byte)(244)))));
-            this.flpPhotos.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.flpPhotos.Location = new System.Drawing.Point(3, 3);
+            this.flpPhotos.Location = new System.Drawing.Point(3, 64);
             this.flpPhotos.Name = "flpPhotos";
-            this.flpPhotos.Size = new System.Drawing.Size(895, 416);
+            this.flpPhotos.Size = new System.Drawing.Size(895, 355);
             this.flpPhotos.TabIndex = 0;
             // 
             // tabFriends
@@ -327,25 +335,6 @@
             this.flpGroups.Size = new System.Drawing.Size(895, 416);
             this.flpGroups.TabIndex = 0;
             // 
-            // picBoxProfilePic
-            // 
-            this.picBoxProfilePic.Location = new System.Drawing.Point(13, 13);
-            this.picBoxProfilePic.Name = "picBoxProfilePic";
-            this.picBoxProfilePic.Size = new System.Drawing.Size(100, 100);
-            this.picBoxProfilePic.TabIndex = 0;
-            this.picBoxProfilePic.TabStop = false;
-            this.picBoxProfilePic.Click += new System.EventHandler(this.picBoxProfilePic_Click);
-            // 
-            // picBoxBorder
-            // 
-            this.picBoxBorder.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(8)))), ((int)(((byte)(102)))), ((int)(((byte)(255)))));
-            this.picBoxBorder.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.picBoxBorder.Location = new System.Drawing.Point(0, 0);
-            this.picBoxBorder.Name = "picBoxBorder";
-            this.picBoxBorder.Size = new System.Drawing.Size(933, 581);
-            this.picBoxBorder.TabIndex = 3;
-            this.picBoxBorder.TabStop = false;
-            // 
             // btnPostStatus
             // 
             this.btnPostStatus.Font = new System.Drawing.Font("Arial Rounded MT Bold", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
@@ -413,6 +402,81 @@
             this.dtpPostDateTo.Size = new System.Drawing.Size(174, 20);
             this.dtpPostDateTo.TabIndex = 1;
             // 
+            // picBoxProfilePic
+            // 
+            this.picBoxProfilePic.Location = new System.Drawing.Point(13, 13);
+            this.picBoxProfilePic.Name = "picBoxProfilePic";
+            this.picBoxProfilePic.Size = new System.Drawing.Size(100, 100);
+            this.picBoxProfilePic.TabIndex = 0;
+            this.picBoxProfilePic.TabStop = false;
+            this.picBoxProfilePic.Click += new System.EventHandler(this.picBoxProfilePic_Click);
+            // 
+            // picBoxBorder
+            // 
+            this.picBoxBorder.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(8)))), ((int)(((byte)(102)))), ((int)(((byte)(255)))));
+            this.picBoxBorder.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.picBoxBorder.Location = new System.Drawing.Point(0, 0);
+            this.picBoxBorder.Name = "picBoxBorder";
+            this.picBoxBorder.Size = new System.Drawing.Size(933, 581);
+            this.picBoxBorder.TabIndex = 3;
+            this.picBoxBorder.TabStop = false;
+            // 
+            // btnFilterByDatePhotos
+            // 
+            this.btnFilterByDatePhotos.Font = new System.Drawing.Font("Arial Rounded MT Bold", 15.75F);
+            this.btnFilterByDatePhotos.Location = new System.Drawing.Point(3, 3);
+            this.btnFilterByDatePhotos.Name = "btnFilterByDatePhotos";
+            this.btnFilterByDatePhotos.Size = new System.Drawing.Size(155, 55);
+            this.btnFilterByDatePhotos.TabIndex = 7;
+            this.btnFilterByDatePhotos.Text = "Filter By Date";
+            this.btnFilterByDatePhotos.UseVisualStyleBackColor = true;
+            this.btnFilterByDatePhotos.Click += new System.EventHandler(this.btnFilterByDatePhotos_Click);
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Font = new System.Drawing.Font("Arial", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(177)));
+            this.label1.Location = new System.Drawing.Point(3, 29);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(49, 18);
+            this.label1.TabIndex = 4;
+            this.label1.Text = "From:";
+            // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Font = new System.Drawing.Font("Arial", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(177)));
+            this.label2.Location = new System.Drawing.Point(3, 3);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(28, 18);
+            this.label2.TabIndex = 2;
+            this.label2.Text = "To:";
+            // 
+            // panel2
+            // 
+            this.panel2.Controls.Add(this.label1);
+            this.panel2.Controls.Add(this.dtpFromPhotos);
+            this.panel2.Controls.Add(this.label2);
+            this.panel2.Controls.Add(this.dtpToPhotos);
+            this.panel2.Location = new System.Drawing.Point(164, 3);
+            this.panel2.Name = "panel2";
+            this.panel2.Size = new System.Drawing.Size(235, 55);
+            this.panel2.TabIndex = 8;
+            // 
+            // dtpFromPhotos
+            // 
+            this.dtpFromPhotos.Location = new System.Drawing.Point(58, 29);
+            this.dtpFromPhotos.Name = "dtpFromPhotos";
+            this.dtpFromPhotos.Size = new System.Drawing.Size(174, 20);
+            this.dtpFromPhotos.TabIndex = 3;
+            // 
+            // dtpToPhotos
+            // 
+            this.dtpToPhotos.Location = new System.Drawing.Point(58, 3);
+            this.dtpToPhotos.Name = "dtpToPhotos";
+            this.dtpToPhotos.Size = new System.Drawing.Size(174, 20);
+            this.dtpToPhotos.TabIndex = 1;
+            // 
             // FormMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -433,10 +497,12 @@
             this.tabVideos.ResumeLayout(false);
             this.tabPages.ResumeLayout(false);
             this.tabGroups.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.picBoxProfilePic)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.picBoxBorder)).EndInit();
             this.panel1.ResumeLayout(false);
             this.panel1.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.picBoxProfilePic)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.picBoxBorder)).EndInit();
+            this.panel2.ResumeLayout(false);
+            this.panel2.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -474,5 +540,11 @@
         private System.Windows.Forms.DateTimePicker dtpPostDateFrom;
         private System.Windows.Forms.Label lblTo;
         private System.Windows.Forms.DateTimePicker dtpPostDateTo;
+        private System.Windows.Forms.Button btnFilterByDatePhotos;
+        private System.Windows.Forms.Panel panel2;
+        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.DateTimePicker dtpFromPhotos;
+        private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.DateTimePicker dtpToPhotos;
     }
 }

@@ -252,7 +252,7 @@ namespace BasicFacebookFeatures
                     }
                 }
             }
-            catch (Exception ex)
+            catch 
             {
                 for (int j = 0; j < DummyData.Photos.Count; j++)
                 {
@@ -303,7 +303,6 @@ namespace BasicFacebookFeatures
             }
         }
 
-        
         private void btnPosts_MouseHover(object sender, EventArgs e)
         {
             btnPosts.ForeColor = m_HoverColor;
@@ -400,6 +399,43 @@ namespace BasicFacebookFeatures
             else
             {
                 MessageBox.Show("Error filtering posts!");
+            }
+        }
+
+        private void btnFilterByDatePhotos_Click(object sender, EventArgs e)
+        {
+            DateTime dateFrom = dtpFromPhotos.Value.Date.Date;
+            DateTime dateTo = dtpToPhotos.Value.Date.Date;
+
+            FacebookObjectCollection<Photo> filteredPhotos = new FacebookObjectCollection<Photo>();
+
+            foreach (Album album in m_LoggedInUser.Albums)
+            {
+                foreach(Photo photo in album.Photos)
+                {
+                    DateTime photoDate = photo.CreatedTime.Value.Date;
+
+                    if (photoDate >= dateFrom && photoDate <= dateTo)
+                    {
+                        filteredPhotos.Add(photo);
+                    }
+                }
+
+            }
+
+            if (filteredPhotos.Count > 0)
+            {
+                flpPhotos.Controls.Clear();
+
+                foreach (Photo photo in filteredPhotos)
+                {
+                    AssetBox albumBox = new AssetBox(photo.Link, photo.PictureThumbURL, photo.Name);
+                    flpPhotos.Controls.Add(albumBox);
+                }
+            }
+            else
+            {
+                MessageBox.Show("Error filtering photos!");
             }
         }
     }

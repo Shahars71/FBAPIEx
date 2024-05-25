@@ -16,6 +16,7 @@ namespace BasicFacebookFeatures
     public partial class PostViewer : UserControl
     {
         private Post m_Post;
+        
         public PostViewer(Post post)
         {
             InitializeComponent();
@@ -59,9 +60,20 @@ namespace BasicFacebookFeatures
                     listBoxComments.Location = new Point(listBoxComments.Location.X - 116, listBoxComments.Location.Y);
                     pbPostPic.Location = new Point(pbPostPic.Location.X - 116, pbPostPic.Location.Y);
                     lblPostDate.Location = new Point(lblPostDate.Location.X - 116, lblPostDate.Location.Y);
+                    lblLikes.Location = new Point(lblLikes.Location.X - 116, lblLikes.Location.Y);
+                    btnLike.Location = new Point(btnLike.Location.X - 116, btnLike.Location.Y);
                 }
             }
             catch { }
+
+            try
+            {
+                lblLikes.Text = m_Post.LikedBy.Count.ToString();
+            }
+            catch 
+            {
+
+            }
 
             try
             {
@@ -82,6 +94,38 @@ namespace BasicFacebookFeatures
         private void listBox1_SelectedIndexChanged(object sender, EventArgs e)
         {
 
+        }
+
+        private void btnLike_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                m_Post.Like();
+                btnLike.Enabled = false;
+                btnLike.Visible = false;
+                btnUnlike.Enabled = true;
+                btnUnlike.Visible = true;
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"{ex.Message}");
+            }
+        }
+
+        private void btnUnlike_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                m_Post.Unlike();
+                btnUnlike.Enabled = false;
+                btnUnlike.Visible = false;
+                btnLike.Enabled = true;
+                btnLike.Visible = true;
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"{ex.Message}");
+            }
         }
     }
 
