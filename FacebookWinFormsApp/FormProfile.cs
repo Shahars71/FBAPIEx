@@ -61,7 +61,7 @@ namespace BasicFacebookFeatures
 
                 try
                 {
-                    lblGender.Text = m_User.Gender.ToString();
+                    lblGender.Text = "Gender: "+m_User.Gender.ToString();
                 }
                 catch (Exception ex)
                 {
@@ -70,10 +70,11 @@ namespace BasicFacebookFeatures
 
                 try
                 {
-                    lblRelationship.Text = m_User.RelationshipStatus.ToString();
+                    lblRelationship.Text = "Relationship status: "+m_User.RelationshipStatus.ToString();
                 }
                 catch (Exception ex)
                 {
+                    lblRelationship.Text = "Relationship status not found.";
                     Console.WriteLine($"{ex.Message}");
                 }
 
@@ -86,11 +87,12 @@ namespace BasicFacebookFeatures
                         relStat == User.eRelationshipStatus.InAnOpenRelationship ||
                         relStat == User.eRelationshipStatus.Separated              )
                     {
-                        lblSignificantOther.Text = m_User.SignificantOther.Name;
+                        lblSignificantOther.Text = "In a relationship with:\n"+m_User.SignificantOther.Name;
                     }
                     else
                     {
                         lblSignificantOther.Enabled = false;
+                        lblSignificantOther.Text = "No SO found!";
                     }
 
                 }
@@ -103,54 +105,81 @@ namespace BasicFacebookFeatures
                 {
                     if (m_User.Hometown != null)
                     {
-                        lblHometown.Text = m_User.Hometown.ToString();
+                        lblHometown.Text = "Home town:\n"+m_User.Hometown.ToString();
                     }
                     else
                     {
                         lblHometown.Enabled = false;
+                        lblHometown.Text = "No home\ntown found!";
                     }
                 }
                 catch (Exception ex )
                 {
                     Console.WriteLine($"{ex.Message}");
+                    lblHometown.Enabled = false;
+                    lblHometown.Text = "No home\ntown found!";
                 }
 
                 try
                 {
                     if (m_User.Location != null)
                     {
-                        lblLocation.Text = m_User.Location.Name; 
+                        lblLocation.Text = "Current location:\n"+m_User.Location.Name; 
                     }
                     else
                     {
                         lblLocation.Enabled = false;
+                        lblLocation.Text = "No current\nlocation found!";
                     }
                 }
                 catch (Exception ex)
                 {
                     Console.WriteLine($"{ex.Message}");
+                    lblLocation.Enabled = false;
+                    lblLocation.Text = "No current\nlocation found!";
                 }
 
                 try
                 {
                     if (m_User.Birthday != null) { 
-                        lblBday.Text = m_User.Birthday;
+                        lblBday.Text = "Birthday:\n"+m_User.Birthday;
                     }
                     else
                     {
                         lblBday.Enabled = false;
+                        lblBday.Text = "No birthday found!";
                     }
                 }
                 catch (Exception ex)
                 {
                     Console.WriteLine($"{ex.Message}");
+                    lblBday.Enabled = false;
+                    lblBday.Text = "No birthday found!";
+                }
+
+                try
+                {
+                    tbBio.Text = m_User.About;
+                }
+                catch ( Exception ex )
+                {
+                    Console.WriteLine($"{ex.Message}");
+                    tbBio.Text = "No bio found!";
                 }
             }
         }
 
         private void lblSignificantOther_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
-            System.Diagnostics.Process.Start(m_User.SignificantOther.Link);
+            try
+            {
+                System.Diagnostics.Process.Start(m_User.SignificantOther.Link);
+            }
+            catch
+            {
+                MessageBox.Show("Data not found!");
+            }
+            
         }
     }
 }

@@ -16,16 +16,9 @@ namespace BasicFacebookFeatures
     public partial class PostViewer : UserControl
     {
         private Post m_Post;
-
-        public PostViewer()
-        {
-            InitializeComponent();
-            m_Post = null;
-        }
         public PostViewer(Post post)
         {
             InitializeComponent();
-
             m_Post = post;
             initializePost();
         }
@@ -53,6 +46,28 @@ namespace BasicFacebookFeatures
             {
             }
 
+            try
+            {
+                if (m_Post.From != null)
+                {
+                    pbPoster.LoadAsync(m_Post.From.PictureNormalURL);
+                }
+                else
+                {
+                    pbPoster.Visible = false;
+                    tbPost.Location = new Point(tbPost.Location.X - 116, tbPost.Location.Y);
+                    listBoxComments.Location = new Point(listBoxComments.Location.X - 116, listBoxComments.Location.Y);
+                    pbPostPic.Location = new Point(pbPostPic.Location.X - 116, pbPostPic.Location.Y);
+                    lblPostDate.Location = new Point(lblPostDate.Location.X - 116, lblPostDate.Location.Y);
+                }
+            }
+            catch { }
+
+            try
+            {
+                lblPostDate.Text = "Posted on: " + m_Post.CreatedTime.ToString();
+            }
+            catch { }
             try
             {
                 listBoxComments.DisplayMember = "Message";

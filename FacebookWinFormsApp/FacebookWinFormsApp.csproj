@@ -90,7 +90,13 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="DummyFriends.cs" />
+    <Compile Include="DummyData.cs" />
+    <Compile Include="FormPostStatus.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Form1.Designer.cs">
+      <DependentUpon>FormPostStatus.cs</DependentUpon>
+    </Compile>
     <Compile Include="FormProfile.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -117,30 +123,15 @@
     <Compile Include="PostViewer.Designer.cs">
       <DependentUpon>PostViewer.cs</DependentUpon>
     </Compile>
-    <Compile Include="FriendBox.cs">
+    <Compile Include="AssetBox.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="FriendBox.Designer.cs">
-      <DependentUpon>FriendBox.cs</DependentUpon>
+    <Compile Include="AssetBox.Designer.cs">
+      <DependentUpon>AssetBox.cs</DependentUpon>
     </Compile>
-    <Compile Include="PageBox.cs">
-      <SubType>UserControl</SubType>
-    </Compile>
-    <Compile Include="PageBox.Designer.cs">
-      <DependentUpon>PageBox.cs</DependentUpon>
-    </Compile>
-    <Compile Include="GroupBox.cs">
-      <SubType>UserControl</SubType>
-    </Compile>
-    <Compile Include="GroupBox.Designer.cs">
-      <DependentUpon>GroupBox.cs</DependentUpon>
-    </Compile>
-    <Compile Include="VideoBox.cs">
-      <SubType>UserControl</SubType>
-    </Compile>
-    <Compile Include="VideoBox.Designer.cs">
-      <DependentUpon>VideoBox.cs</DependentUpon>
-    </Compile>
+    <EmbeddedResource Include="Form1.resx">
+      <DependentUpon>FormPostStatus.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="FormLogin.resx">
       <DependentUpon>FormLogin.cs</DependentUpon>
     </EmbeddedResource>
@@ -150,36 +141,27 @@
     <EmbeddedResource Include="FormProfile.resx">
       <DependentUpon>FormProfile.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="FriendBox.resx">
-      <DependentUpon>FriendBox.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="GroupBox.resx">
-      <DependentUpon>GroupBox.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="PageBox.resx">
-      <DependentUpon>PageBox.cs</DependentUpon>
-    </EmbeddedResource>
     <EmbeddedResource Include="PostViewer.resx">
       <DependentUpon>PostViewer.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
-      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
       <SubType>Designer</SubType>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
-    <Compile Include="Properties\Resources.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DependentUpon>Resources.resx</DependentUpon>
-      <DesignTime>True</DesignTime>
-    </Compile>
-    <EmbeddedResource Include="VideoBox.resx">
-      <DependentUpon>VideoBox.cs</DependentUpon>
+    <EmbeddedResource Include="AssetBox.resx">
+      <DependentUpon>AssetBox.cs</DependentUpon>
     </EmbeddedResource>
     <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
     </None>
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
     <Compile Include="Properties\Settings.Designer.cs">
       <AutoGen>True</AutoGen>
       <DependentUpon>Settings.settings</DependentUpon>
@@ -188,6 +170,33 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Assets\Friends\Orange.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Assets\General\groupo.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Assets\General\pageo.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Resources\" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Assets\Friends\apple.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Assets\Friends\pear.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Assets\Friends\pineapple.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Assets\Friends\strawberry.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Assets\General\like.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">

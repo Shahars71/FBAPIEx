@@ -51,45 +51,51 @@
             // lblName
             // 
             this.lblName.AutoSize = true;
-            this.lblName.Location = new System.Drawing.Point(119, 22);
+            this.lblName.Font = new System.Drawing.Font("Arial", 20.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(177)));
+            this.lblName.ForeColor = System.Drawing.SystemColors.ControlText;
+            this.lblName.Location = new System.Drawing.Point(115, 25);
             this.lblName.Name = "lblName";
-            this.lblName.Size = new System.Drawing.Size(54, 13);
+            this.lblName.Size = new System.Drawing.Size(148, 32);
             this.lblName.TabIndex = 1;
             this.lblName.Text = "Full Name";
             // 
             // lblBday
             // 
             this.lblBday.AutoSize = true;
-            this.lblBday.Location = new System.Drawing.Point(132, 56);
+            this.lblBday.Font = new System.Drawing.Font("Arial Rounded MT Bold", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblBday.Location = new System.Drawing.Point(282, 72);
             this.lblBday.Name = "lblBday";
-            this.lblBday.Size = new System.Drawing.Size(45, 13);
+            this.lblBday.Size = new System.Drawing.Size(70, 17);
             this.lblBday.TabIndex = 2;
             this.lblBday.Text = "Birthday";
             // 
             // lblGender
             // 
             this.lblGender.AutoSize = true;
-            this.lblGender.Location = new System.Drawing.Point(132, 80);
+            this.lblGender.Font = new System.Drawing.Font("Arial Rounded MT Bold", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblGender.Location = new System.Drawing.Point(118, 72);
             this.lblGender.Name = "lblGender";
-            this.lblGender.Size = new System.Drawing.Size(42, 13);
+            this.lblGender.Size = new System.Drawing.Size(63, 17);
             this.lblGender.TabIndex = 3;
             this.lblGender.Text = "Gender";
             // 
             // lblRelationship
             // 
             this.lblRelationship.AutoSize = true;
-            this.lblRelationship.Location = new System.Drawing.Point(293, 44);
+            this.lblRelationship.Font = new System.Drawing.Font("Arial Rounded MT Bold", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblRelationship.Location = new System.Drawing.Point(12, 125);
             this.lblRelationship.Name = "lblRelationship";
-            this.lblRelationship.Size = new System.Drawing.Size(98, 13);
+            this.lblRelationship.Size = new System.Drawing.Size(148, 17);
             this.lblRelationship.TabIndex = 4;
             this.lblRelationship.Text = "Relationship Status";
             // 
             // lblSignificantOther
             // 
             this.lblSignificantOther.AutoSize = true;
-            this.lblSignificantOther.Location = new System.Drawing.Point(293, 80);
+            this.lblSignificantOther.Font = new System.Drawing.Font("Arial Rounded MT Bold", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblSignificantOther.Location = new System.Drawing.Point(12, 152);
             this.lblSignificantOther.Name = "lblSignificantOther";
-            this.lblSignificantOther.Size = new System.Drawing.Size(85, 13);
+            this.lblSignificantOther.Size = new System.Drawing.Size(131, 17);
             this.lblSignificantOther.TabIndex = 5;
             this.lblSignificantOther.TabStop = true;
             this.lblSignificantOther.Text = "Significant Other";
@@ -97,34 +103,37 @@
             // 
             // tbBio
             // 
-            this.tbBio.Location = new System.Drawing.Point(13, 145);
+            this.tbBio.Location = new System.Drawing.Point(13, 181);
             this.tbBio.Multiline = true;
             this.tbBio.Name = "tbBio";
             this.tbBio.ReadOnly = true;
-            this.tbBio.Size = new System.Drawing.Size(250, 104);
+            this.tbBio.Size = new System.Drawing.Size(250, 68);
             this.tbBio.TabIndex = 6;
             this.tbBio.Text = "Bio";
             // 
             // lblHometown
             // 
             this.lblHometown.AutoSize = true;
-            this.lblHometown.Location = new System.Drawing.Point(296, 145);
+            this.lblHometown.Font = new System.Drawing.Font("Arial Rounded MT Bold", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblHometown.Location = new System.Drawing.Point(282, 116);
             this.lblHometown.Name = "lblHometown";
-            this.lblHometown.Size = new System.Drawing.Size(65, 13);
+            this.lblHometown.Size = new System.Drawing.Size(93, 17);
             this.lblHometown.TabIndex = 7;
             this.lblHometown.Text = "Home Town";
             // 
             // lblLocation
             // 
             this.lblLocation.AutoSize = true;
-            this.lblLocation.Location = new System.Drawing.Point(299, 209);
+            this.lblLocation.Font = new System.Drawing.Font("Arial Rounded MT Bold", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblLocation.Location = new System.Drawing.Point(282, 162);
             this.lblLocation.Name = "lblLocation";
-            this.lblLocation.Size = new System.Drawing.Size(85, 13);
+            this.lblLocation.Size = new System.Drawing.Size(132, 17);
             this.lblLocation.TabIndex = 8;
             this.lblLocation.Text = "Current Location";
             // 
             // FormProfile
             // 
+            this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(147)))), ((int)(((byte)(193)))), ((int)(((byte)(244)))));
             this.ClientSize = new System.Drawing.Size(426, 261);
             this.Controls.Add(this.lblLocation);
             this.Controls.Add(this.lblHometown);

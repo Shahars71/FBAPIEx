@@ -16,6 +16,8 @@ namespace BasicFacebookFeatures
     public partial class FormMain : Form
     {
         User m_LoggedInUser;
+        Color m_HoverColor;
+        Color m_ButtonColor;
 
         public FormMain()
         {
@@ -25,9 +27,17 @@ namespace BasicFacebookFeatures
         public FormMain(User user)
         {
             InitializeComponent();
+
             m_LoggedInUser = user;
+
+            m_HoverColor = new Color();
+            m_HoverColor = Color.FromArgb(255, 8, 102, 255);
+
+            m_ButtonColor = new Color();
+            m_ButtonColor = Color.FromArgb(255, 101, 103, 107);
+
             fetchUserInfo();
-            //fillPostsTab();
+            fillPostsTab();
         }
 
         private void fetchUserInfo()
@@ -37,33 +47,6 @@ namespace BasicFacebookFeatures
             labelUserName.Text = m_LoggedInUser.Name;
         }
 
-        private void fillPostsTab()
-        {
-
-            if (m_LoggedInUser.Posts.Count > 0)
-            {
-                foreach(Post post in m_LoggedInUser.Posts)
-                {
-                    try
-                    {
-                        Console.WriteLine(post.Caption);
-
-                        PostViewer postViewer = new PostViewer();
-                        flpPosts.Controls.Add(postViewer);
-                    }
-                    catch (Exception ex)
-                    {
-                        Console.WriteLine($"Error getting post: {post.Caption}\n{ex.Message}");
-                    }
-                }
-            }
-
-            else
-            {
-                errorHandle(flpPosts);
-            }
-        }
-
         private void btnAlbums_Click(object sender, EventArgs e)
         {
             tabControlMain.SelectedTab = tabPhotos;
@@ -71,77 +54,19 @@ namespace BasicFacebookFeatures
             fillPhotosTab();
         }
 
-        private void fillPhotosTab()
-        {
-
-
-            try
-            {
-                foreach (Album album in m_LoggedInUser.Albums)
-                {
-                    foreach (Photo pc in album.Photos)
-                    {
-                        PictureBox tabFiller = new PictureBox();
-                        tabFiller.Size = new Size(128, 128);
-                        tabFiller.LoadAsync(pc.PictureThumbURL);
-
-                        flpPhotos.Controls.Add(tabFiller);
-                    }
-                }
-            }
-            catch
-            {
-                errorHandle(flpPhotos);
-            }
-        }
-
         private void btnPosts_Click(object sender, EventArgs e)
         {
             tabControlMain.SelectedTab= tabPosts;
-            tabPosts.Controls.Clear();
+
+            flpPosts.Controls.Clear();
             fillPostsTab();
         }
 
         private void btnFriends_Click(object sender, EventArgs e)
         {
             tabControlMain.SelectedTab = tabFriends;
+            flpFriends.Controls.Clear();
             fillFriendsTab();
-        }
-
-        private void fillFriendsTab()
-        {
-            try
-            {
-                for (int i = 0; i < m_LoggedInUser.FriendLists.Count; i++)
-                {
-                    FriendList friendList = m_LoggedInUser.FriendLists[i];
-                    try
-                    {
-                        foreach (User friend in friendList.Members)
-                        {
-                            try
-                            {
-                                FriendBox friendBox = new FriendBox(friend);
-                                flpFriends.Controls.Add(friendBox);
-                            }
-                            catch (Exception ex)
-                            {
-                                Console.WriteLine($"Error getting friend: {friend.Name}");
-
-                            }
-
-                        }
-                    }
-                    catch (Exception ex)
-                    {
-                        errorHandle(flpFriends);
-                    }
-                }
-            }
-            catch (Exception ex)
-            {
-                errorHandle(flpFriends);
-            }
         }
 
         private void picBoxProfilePic_Click(object sender, EventArgs e)
@@ -153,76 +78,69 @@ namespace BasicFacebookFeatures
         private void btnVideos_Click(object sender, EventArgs e)
         {
             tabControlMain.SelectedTab = tabVideos;
+            flpVideos.Controls.Clear();
             fillVideosTab();
 
         }
 
+        private void btnPages_Click(object sender, EventArgs e)
+        {
+            tabControlMain.SelectedTab = tabPages;
+            flpPages.Controls.Clear();
+            fillPagesTab();
+        }
+
+        private void btnGroups_Click(object sender, EventArgs e)
+        {
+            tabControlMain.SelectedTab = tabGroups;
+            flpGroups.Controls.Clear();
+            fillGroupsTab();
+        }
+
+        private void labelUserName_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void flpPages_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        //Functions to fill each tab with its respective data
         private void fillVideosTab()
         {
-            
+
             try
             {
                 if (m_LoggedInUser.Videos.Count > 0)
                 {
                     foreach (Video vid in m_LoggedInUser.Videos)
                     {
-                        VideoBox videoBox = new VideoBox(vid);
+                        AssetBox videoBox = new AssetBox(vid.URL, vid.PictureURL, vid.Name);
                         flpVideos.Controls.Add(videoBox);
                     }
                 }
                 else
                 {
-                    errorHandle(flpVideos);
-                }
-            }
-            catch
-            {
-                errorHandle(flpVideos);
-            }
-        }
-
-        private void errorHandle(FlowLayoutPanel i_flp)
-        {
-            Label errorLabel = new Label();
-            errorLabel.Text = "[Data unavailable]";
-            i_flp.Controls.Add(errorLabel);
-        }
-
-        private void btnPages_Click(object sender, EventArgs e)
-        {
-            tabControlMain.SelectedTab = tabPages;
-            fillPagesTab();
-        }
-
-        private void fillPagesTab()
-        {
-            try
-            {
-                if (m_LoggedInUser.LikedPages.Count > 0)
-                {
-                    foreach (Page page in m_LoggedInUser.LikedPages)
+                    for (int i = 0; i < DummyData.Videos.Count; i++)
                     {
-                        PageBox pageBox = new PageBox(page);
-                        flpPages.Controls.Add(pageBox);
+                        AssetBox videoBox = new AssetBox(DummyData.Videos[i]);
+                        flpVideos.Controls.Add(videoBox);
                     }
                 }
-                else
+            }
+            catch (Exception ex)
+            {
+                //errorHandle(flpVideos, ex);
+
+                for (int i = 0; i < DummyData.Videos.Count; i++)
                 {
-                    errorHandle(flpPages);
+                    AssetBox videoBox = new AssetBox(DummyData.Videos[i]);
+                    flpVideos.Controls.Add(videoBox);
                 }
             }
-            catch
-            {
-                errorHandle(flpPages);
-            }
         }
-
-        private void btnGroups_Click(object sender, EventArgs e)
-        {
-            tabControlMain.SelectedTab = tabGroups;
-            fillGroupsTab();
-        }
-
         private void fillGroupsTab()
         {
             try
@@ -231,20 +149,258 @@ namespace BasicFacebookFeatures
                 {
                     foreach (Group group in m_LoggedInUser.Groups)
                     {
-                        GroupBox groupBox = new GroupBox(group);
+                        AssetBox groupBox = new AssetBox(group.Link, group.PictureNormalURL, group.Name);
                         flpGroups.Controls.Add(groupBox);
                     }
                 }
                 else
                 {
-                    errorHandle(flpGroups);
+                    for (int i = 0; i < DummyData.Groups.Count; i++)
+                    {
+                        AssetBox groupBox = new AssetBox(DummyData.Groups[i]);
+                        flpGroups.Controls.Add(groupBox);
+                    }
                 }
             }
-            catch
+            catch (Exception ex)
             {
-                errorHandle(flpGroups);
+                //errorHandle(flpGroups, ex);
+                for (int i = 0; i < DummyData.Groups.Count; i++)
+                {
+                    AssetBox groupBox = new AssetBox(DummyData.Groups[i]);
+                    flpGroups.Controls.Add(groupBox);
+                }
+            }
+        }
+        private void fillPagesTab()
+        {
+            try
+            {
+                if (m_LoggedInUser.LikedPages.Count > 0)
+                {
+                    foreach (Page page in m_LoggedInUser.LikedPages)
+                    {
+                        AssetBox pageBox = new AssetBox(page.URL, page.PictureNormalURL, page.Name);
+                        flpPages.Controls.Add(pageBox);
+                    }
+                }
+                else
+                {
+                    for (int i = 0; i < DummyData.Pages.Count; i++)
+                    {
+                        AssetBox pageBox = new AssetBox(DummyData.Pages[i]);
+                        flpPages.Controls.Add(pageBox);
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                //errorHandle(flpPages, ex);
+
+                for (int i = 0; i < DummyData.Pages.Count; i++)
+                {
+                    AssetBox pageBox = new AssetBox(DummyData.Pages[i]);
+                    flpPages.Controls.Add(pageBox);
+                }
+            }
+        }
+        private void fillFriendsTab()
+        {
+            try
+            {
+                if (m_LoggedInUser.Friends.Count > 0)
+                {
+                    foreach (User friend in m_LoggedInUser.Friends)
+                    {
+                        AssetBox friendBox = new AssetBox(friend.Link, friend.PictureNormalURL, friend.Name);
+                        flpFriends.Controls.Add(friendBox);
+                    }
+                }
+                else
+                {
+                    for (int j = 0; j < DummyData.Friends.Count; j++)
+                    {
+                        AssetBox friendBox = new AssetBox(DummyData.Friends[j]);
+                        flpFriends.Controls.Add(friendBox);
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                //errorHandle(flpFriends, ex);
+
+                for (int j = 0; j < DummyData.Friends.Count; j++)
+                {
+                    AssetBox friendBox = new AssetBox(DummyData.Friends[j]);
+                    flpFriends.Controls.Add(friendBox);
+                }
+            }
+        }
+        private void fillPhotosTab()
+        {
+
+
+            try
+            {
+                foreach (Album album in m_LoggedInUser.Albums)
+                {
+                    foreach (Photo pic in album.Photos)
+                    {
+                        AssetBox photoBox = new AssetBox(pic.Link, pic.PictureThumbURL, pic.Name);
+
+                        flpPhotos.Controls.Add(photoBox);
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                for (int j = 0; j < DummyData.Photos.Count; j++)
+                {
+                    AssetBox photoBox = new AssetBox(DummyData.Photos[j]);
+                    flpFriends.Controls.Add(photoBox);
+                }
+            }
+        }
+        private void fillPostsTab()
+        {
+
+            if (m_LoggedInUser.Posts.Count > 0)
+            {
+                foreach (Post post in m_LoggedInUser.WallPosts)
+                {
+                    try
+                    {
+                        PostViewer postViewer = new PostViewer(post);
+                        flpPosts.Controls.Add(postViewer);
+                    }
+                    catch (Exception ex)
+                    {
+                        Console.WriteLine($"Error getting post: {post.Caption}\n{ex.Message}");
+                    }
+                }
+            }
+
+            else
+            {
+                errorHandle(flpPosts, null);
             }
         }
 
+        //Custom non-intrusive error handler
+        private void errorHandle(FlowLayoutPanel i_flp, Exception ex)
+        {
+            Label errorLabel = new Label();
+            errorLabel.Text = "[Data unavailable]";
+            i_flp.Controls.Add(errorLabel);
+
+            if (ex != null)
+            {
+                Console.WriteLine($"Error getting data to {i_flp.Name}\nError: {ex.Message}");
+            }
+            else
+            {
+                Console.WriteLine($"Error getting data to {i_flp.Name}");
+            }
+        }
+
+        
+        private void btnPosts_MouseHover(object sender, EventArgs e)
+        {
+            btnPosts.ForeColor = m_HoverColor;
+        }
+
+        private void btnAlbums_MouseHover(object sender, EventArgs e)
+        {
+            btnAlbums.ForeColor = m_HoverColor;
+        }
+
+        private void btnFriends_MouseHover(object sender, EventArgs e)
+        {
+            btnFriends.ForeColor = m_HoverColor;
+        }
+
+        private void btnVideos_MouseHover(object sender, EventArgs e)
+        {
+            btnVideos.ForeColor = m_HoverColor;
+        }
+
+        private void btnPages_MouseHover(object sender, EventArgs e)
+        {
+            btnPages.ForeColor = m_HoverColor;
+        }
+
+        private void btnGroups_MouseHover(object sender, EventArgs e)
+        {
+            btnGroups.ForeColor = m_HoverColor;
+        }
+
+        private void btnGroups_MouseLeave(object sender, EventArgs e)
+        {
+            btnGroups.ForeColor = m_ButtonColor;
+        }
+
+        private void btnPages_MouseLeave(object sender, EventArgs e)
+        {
+            btnPages.ForeColor= m_ButtonColor;
+        }
+
+        private void btnVideos_MouseLeave(object sender, EventArgs e)
+        {
+            btnVideos.ForeColor= m_ButtonColor;
+        }
+
+        private void btnFriends_MouseLeave(object sender, EventArgs e)
+        {
+            btnFriends.ForeColor= m_ButtonColor;    
+        }
+
+        private void btnAlbums_MouseLeave(object sender, EventArgs e)
+        {
+            btnAlbums.ForeColor= m_ButtonColor;
+        }
+
+        private void btnPosts_MouseLeave(object sender, EventArgs e)
+        {
+            btnPosts.ForeColor= m_ButtonColor;
+        }
+
+        private void btnPostStatus_Click(object sender, EventArgs e)
+        {
+            FormPostStatus postStatus = new FormPostStatus(m_LoggedInUser);
+            postStatus.ShowDialog();
+        }
+
+        private void btnDateFilter_Click(object sender, EventArgs e)
+        {
+            DateTime dateFrom = dtpPostDateFrom.Value.Date.Date;
+            DateTime dateTo = dtpPostDateTo.Value.Date.Date;
+
+            FacebookObjectCollection<Post> filteredPosts = new FacebookObjectCollection<Post>();
+
+            foreach (Post post in m_LoggedInUser.WallPosts)
+            {
+                DateTime postDate = post.CreatedTime.Value.Date;
+
+                if (postDate >= dateFrom && postDate <= dateTo)
+                {
+                    filteredPosts.Add(post);
+                }
+            }
+            
+            if (filteredPosts.Count > 0)
+            {
+                flpPosts.Controls.Clear();
+
+                foreach (Post post in filteredPosts)
+                {
+                    PostViewer postViewer = new PostViewer(post);
+                    flpPosts.Controls.Add(postViewer);
+                }
+            }
+            else
+            {
+                MessageBox.Show("Error filtering posts!");
+            }
+        }
     }
 }
