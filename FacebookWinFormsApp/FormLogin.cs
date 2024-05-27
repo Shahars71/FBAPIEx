@@ -28,45 +28,67 @@ namespace BasicFacebookFeatures
 
             if (m_LoginResult == null)
             {
-                login();
+                if (login())
+                {
+                    FormMain form1 = new FormMain(m_LoginResult.LoggedInUser);
+                    form1.ShowDialog();
+                }
+                else
+                {
+                    m_LoginResult = null;
+                }
             }
 
-            FormMain form1 = new FormMain(m_LoginResult.LoggedInUser);
-            form1.ShowDialog();
         }
 
-        private void login()
+        private bool login()
         {
-            m_LoginResult = FacebookService.Login(
-                /// (This is Desig Patter's App ID. replace it with your own)
-                textBoxAppID.Text,
-                /// requested permissions:
-                "email",
-                "public_profile",
-                "user_posts",
-                "user_hometown",
-                "user_birthday",
-                "user_age_range",
-                "user_gender",
-                "user_link",
-                "user_friends",
-                "user_location",
-                "user_likes",
-                "public_profile",
-                "user_photos",
-                "user_videos"
-                /// add any relevant permissions
-                );
-
-            if (string.IsNullOrEmpty(m_LoginResult.ErrorMessage))
+            try
             {
+                m_LoginResult = FacebookService.Login(
+               /// (This is Desig Patter's App ID. replace it with your own)
+               textBoxAppID.Text,
+               /// requested permissions:
+               "email",
+               "public_profile",
+               "user_posts",
+               "user_hometown",
+               "user_birthday",
+               "user_age_range",
+               "user_gender",
+               "user_link",
+               "user_friends",  
+               "user_location",
+               "user_likes",
+               "public_profile",
+               "user_photos",
+               "user_videos"
+               /// add any relevant permissions
+               );
 
-                buttonLogin.Text = $"Logged in as {m_LoginResult.LoggedInUser.Name}";
-                buttonLogin.BackColor = Color.LightGreen;
-                pictureBoxProfile.ImageLocation = m_LoginResult.LoggedInUser.PictureNormalURL;
-                buttonLogin.Enabled = false;
-                buttonLogout.Enabled = true;
+                if (string.IsNullOrEmpty(m_LoginResult.ErrorMessage))
+                {
+                    if (m_LoginResult.LoggedInUser != null)
+                    {
+                        buttonLogin.Text = $"Logged in as {m_LoginResult.LoggedInUser.Name}";
+                        buttonLogin.BackColor = Color.LightGreen;
+                        pictureBoxProfile.ImageLocation = m_LoginResult.LoggedInUser.PictureNormalURL;
+                        buttonLogin.Enabled = false;
+                        buttonLogout.Enabled = true;
+                    }
+                    else
+                    {
+                        return false;
+                    }
+                }
+
+                return true;
             }
+            catch
+            {
+                return false;
+            }
+           
         }
 
         private void buttonLogout_Click(object sender, EventArgs e)

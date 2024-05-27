@@ -271,7 +271,7 @@ namespace BasicFacebookFeatures
         private void fillPostsTab()
         {
 
-            if (m_LoggedInUser.Posts.Count > 0)
+            if (m_LoggedInUser.WallPosts.Count > 0)
             {
                 foreach (Post post in m_LoggedInUser.WallPosts)
                 {
