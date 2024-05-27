@@ -60,6 +60,7 @@ namespace BasicFacebookFeatures
 
             if (string.IsNullOrEmpty(m_LoginResult.ErrorMessage))
             {
+
                 buttonLogin.Text = $"Logged in as {m_LoginResult.LoggedInUser.Name}";
                 buttonLogin.BackColor = Color.LightGreen;
                 pictureBoxProfile.ImageLocation = m_LoginResult.LoggedInUser.PictureNormalURL;

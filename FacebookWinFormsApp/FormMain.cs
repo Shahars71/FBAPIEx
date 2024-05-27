@@ -37,14 +37,16 @@ namespace BasicFacebookFeatures
             m_ButtonColor = Color.FromArgb(255, 101, 103, 107);
 
             fetchUserInfo();
-            fillPostsTab();
+
         }
 
+        //Initial home screen fetch and fill
         private void fetchUserInfo()
         {
             
             picBoxProfilePic.LoadAsync(m_LoggedInUser.PictureNormalURL);
             labelUserName.Text = m_LoggedInUser.Name;
+            fillPostsTab();
         }
 
         private void btnAlbums_Click(object sender, EventArgs e)
@@ -141,6 +143,7 @@ namespace BasicFacebookFeatures
                 }
             }
         }
+
         private void fillGroupsTab()
         {
             try
@@ -172,6 +175,7 @@ namespace BasicFacebookFeatures
                 }
             }
         }
+
         private void fillPagesTab()
         {
             try
@@ -204,6 +208,7 @@ namespace BasicFacebookFeatures
                 }
             }
         }
+
         private void fillFriendsTab()
         {
             try
@@ -236,6 +241,7 @@ namespace BasicFacebookFeatures
                 }
             }
         }
+
         private void fillPhotosTab()
         {
 
@@ -261,6 +267,7 @@ namespace BasicFacebookFeatures
                 }
             }
         }
+
         private void fillPostsTab()
         {
 
@@ -286,6 +293,7 @@ namespace BasicFacebookFeatures
             }
         }
 
+
         //Custom non-intrusive error handler
         private void errorHandle(FlowLayoutPanel i_flp, Exception ex)
         {
@@ -303,6 +311,7 @@ namespace BasicFacebookFeatures
             }
         }
 
+        //Mouse hover and leave functions for each menu button
         private void btnPosts_MouseHover(object sender, EventArgs e)
         {
             btnPosts.ForeColor = m_HoverColor;
@@ -363,6 +372,7 @@ namespace BasicFacebookFeatures
             btnPosts.ForeColor= m_ButtonColor;
         }
 
+        //Functions related to extra feature buttons
         private void btnPostStatus_Click(object sender, EventArgs e)
         {
             FormPostStatus postStatus = new FormPostStatus(m_LoggedInUser);
@@ -436,6 +446,49 @@ namespace BasicFacebookFeatures
             else
             {
                 MessageBox.Show("Error filtering photos!");
+            }
+        }
+
+        private void btnSortByLikes_Click(object sender, EventArgs e)
+        {
+            sortPagesByLikes();
+        }
+
+        private void sortPagesByLikes()
+        {
+            List<Page> sortedPages = new List<Page>();
+
+            foreach (Page page in m_LoggedInUser.LikedPages)
+            {
+                sortedPages.Add(page);
+            }
+            flpPages.Controls.Clear();
+
+            try
+            {
+                sortedPages.Sort(compareTwoPageLikeNumbers);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Error sorting pages!{ex.Message}");
+            }
+
+            foreach (Page page in sortedPages)
+            {
+                AssetBox pageBox = new AssetBox(page.URL,page.PictureNormalURL,page.Name);
+                flpPages.Controls.Add(pageBox);
+            }
+        }
+
+        private int compareTwoPageLikeNumbers(Page a, Page b)
+        {
+            if (a.LikesCount == null || b.LikesCount == null)
+            {
+                return 0;
+            }
+            else
+            {
+                return a.LikesCount.Value.CompareTo(b.LikesCount.Value);
             }
         }
     }

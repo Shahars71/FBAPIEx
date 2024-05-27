@@ -91,6 +91,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="DummyData.cs" />
+    <Compile Include="DataUnit.cs" />
     <Compile Include="FormPostStatus.cs">
       <SubType>Form</SubType>
     </Compile>

@@ -25,7 +25,7 @@ namespace BasicFacebookFeatures
             initializeAssetPictureBox();
         }
 
-        public AssetBox(FakeData fakeData)
+        public AssetBox(DataUnit fakeData)
         {
             InitializeComponent();
             m_Name = fakeData.Name;
