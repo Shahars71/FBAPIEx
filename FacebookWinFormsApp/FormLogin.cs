@@ -28,7 +28,7 @@ namespace BasicFacebookFeatures
 
             if (m_LoginResult == null)
             {
-                if (FBLogic.LoginWithoutScreen(out m_LoginResult, textBoxAppID.Text))
+                if (FBLogic.Login(out m_LoginResult, textBoxAppID.Text))
                 {
                     buttonLogin.Text = $"Logged in as {m_LoginResult.LoggedInUser.Name}";
                     buttonLogin.BackColor = Color.LightGreen;

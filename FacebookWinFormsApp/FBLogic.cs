@@ -331,32 +331,5 @@ namespace BasicFacebookFeatures
 
             return dataUnits;
         }
-
-
-
-
-        public static bool LoginWithoutScreen(out LoginResult o_LoginResult, string i_AppID)
-        {
-            try
-            {
-                o_LoginResult = FacebookService.Connect("EAAVaVJPHHkwBOZBDkvPLOLm7GivzjrKfsREKY9VKYgNvMhTGUmDsd3PqL9y2eaxG6zjaRWeKup5GuKy9ZBnPqQ9Dh9LZCHwIK9ZCVnCttOSsemHoKgzMFpsiAA20GvRch4Mas5T7sHjn1wzWYJU67Swp1oygzXOoTIn7oZBZAu7Hfs2SKqhsVSCfcoDQZDZD");
-
-                if (string.IsNullOrEmpty(o_LoginResult.ErrorMessage))
-                {
-                    if (o_LoginResult.LoggedInUser == null)
-                    {
-                        return false;
-                    }
-                }
-
-                return true;
-            }
-            catch
-            {
-                o_LoginResult = null;
-                return false;
-            }
-        }
-
     }
 }
