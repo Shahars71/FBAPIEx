@@ -10,14 +10,26 @@ using System.Windows.Forms;
 using FacebookWrapper.ObjectModel;
 using FacebookWrapper;
 using System.Windows.Forms.VisualStyles;
+using CefSharp.DevTools.DOM;
+using System.Collections.ObjectModel;
+using System.Threading;
 
 namespace BasicFacebookFeatures
 {
     public partial class FormMain : Form
     {
-        User m_LoggedInUser;
-        Color m_HoverColor;
-        Color m_ButtonColor;
+        // $G$ CSS-016 (-5) explicit access modifiers missing.
+        private UserFacade User { get; set; } = null;
+        private List<PostViewer> Posts { get; set; }
+        private List<PictureBox> Photos { get; set; }
+        private List<PictureBox> Friends { get; set; }
+        private List<PictureBox> Groups { get; set; }
+        private List<PictureBox> Videos { get; set; }
+        private List<PictureBox> Pages { get; set; }
+        private readonly Color m_HoverColor = Color.FromArgb(255, 8, 102, 255);
+        private readonly Color m_ButtonColor = Color.FromArgb(255, 101, 103, 107);
+
+        
 
         public FormMain()
         {
@@ -26,17 +38,38 @@ namespace BasicFacebookFeatures
 
         public FormMain(User user)
         {
+            // $G$ CSS-016 (-5) constant values should be used instead of explicit values.
+            object s_lockObj = new object();
+
             InitializeComponent();
 
-            m_LoggedInUser = user;
+            User = new UserFacade(user);
+    
 
-            m_HoverColor = new Color();
-            m_HoverColor = Color.FromArgb(255, 8, 102, 255);
+            Shown += FormMain_OnShown;
 
-            m_ButtonColor = new Color();
-            m_ButtonColor = Color.FromArgb(255, 101, 103, 107);
+        }
+
+        private void FormMain_OnShown(object sender, EventArgs e)
+        {
+            initTabs();
 
             fetchUserInfo();
+
+            cmbSortOrderLikesVids.SelectedIndex = 0;
+
+        }
+
+        private void initTabs()
+        {
+            Posts = FBLogic.GetPostViewerListWithData(User);
+            Photos = FBLogic.GetPictureBoxListWithData(User.Photos, eDataTypes.photos);
+            Friends = FBLogic.GetPictureBoxListWithData(User.Friends, eDataTypes.friends);
+            Groups = FBLogic.GetPictureBoxListWithData(User.Groups, eDataTypes.groups);
+            Videos = FBLogic.GetPictureBoxListWithData(User.Videos, eDataTypes.videos);
+            Pages = FBLogic.GetPictureBoxListWithData(User.LikedPages, eDataTypes.pages);
+
+            fillFLPWithPostViewers();
 
         }
 
@@ -44,36 +77,39 @@ namespace BasicFacebookFeatures
         private void fetchUserInfo()
         {
             
-            picBoxProfilePic.LoadAsync(m_LoggedInUser.PictureNormalURL);
-            labelUserName.Text = m_LoggedInUser.Name;
-            fillPostsTab();
+            picBoxProfilePic.LoadAsync(User.PictureNormalURL);
+            labelUserName.Text = User.Name;
         }
+
+
 
         private void btnAlbums_Click(object sender, EventArgs e)
         {
             tabControlMain.SelectedTab = tabPhotos;
             flpPhotos.Controls.Clear();
-            fillPhotosTab();
+            fillFLPWithPictureBoxes(Photos, flpPhotos);
         }
 
         private void btnPosts_Click(object sender, EventArgs e)
         {
             tabControlMain.SelectedTab= tabPosts;
-
             flpPosts.Controls.Clear();
-            fillPostsTab();
+            fillFLPWithPostViewers();
+
         }
 
         private void btnFriends_Click(object sender, EventArgs e)
         {
             tabControlMain.SelectedTab = tabFriends;
             flpFriends.Controls.Clear();
-            fillFriendsTab();
+            
+            fillFLPWithPictureBoxes(Friends, flpFriends);
+
         }
 
         private void picBoxProfilePic_Click(object sender, EventArgs e)
         {
-            FormProfile formProfile = new FormProfile(m_LoggedInUser);
+            FormProfile formProfile = new FormProfile(User);
             formProfile.ShowDialog();
         }
 
@@ -81,7 +117,7 @@ namespace BasicFacebookFeatures
         {
             tabControlMain.SelectedTab = tabVideos;
             flpVideos.Controls.Clear();
-            fillVideosTab();
+            fillFLPWithPictureBoxes(Videos, flpVideos);
 
         }
 
@@ -89,226 +125,14 @@ namespace BasicFacebookFeatures
         {
             tabControlMain.SelectedTab = tabPages;
             flpPages.Controls.Clear();
-            fillPagesTab();
+            fillFLPWithPictureBoxes(Pages, flpPages);
         }
 
         private void btnGroups_Click(object sender, EventArgs e)
         {
             tabControlMain.SelectedTab = tabGroups;
             flpGroups.Controls.Clear();
-            fillGroupsTab();
-        }
-
-        private void labelUserName_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void flpPages_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        //Functions to fill each tab with its respective data
-        private void fillVideosTab()
-        {
-
-            try
-            {
-                if (m_LoggedInUser.Videos.Count > 0)
-                {
-                    foreach (Video vid in m_LoggedInUser.Videos)
-                    {
-                        AssetBox videoBox = new AssetBox(vid.URL, vid.PictureURL, vid.Name);
-                        flpVideos.Controls.Add(videoBox);
-                    }
-                }
-                else
-                {
-                    for (int i = 0; i < DummyData.Videos.Count; i++)
-                    {
-                        AssetBox videoBox = new AssetBox(DummyData.Videos[i]);
-                        flpVideos.Controls.Add(videoBox);
-                    }
-                }
-            }
-            catch (Exception ex)
-            {
-                //errorHandle(flpVideos, ex);
-
-                for (int i = 0; i < DummyData.Videos.Count; i++)
-                {
-                    AssetBox videoBox = new AssetBox(DummyData.Videos[i]);
-                    flpVideos.Controls.Add(videoBox);
-                }
-            }
-        }
-
-        private void fillGroupsTab()
-        {
-            try
-            {
-                if (m_LoggedInUser.Groups.Count > 0)
-                {
-                    foreach (Group group in m_LoggedInUser.Groups)
-                    {
-                        AssetBox groupBox = new AssetBox(group.Link, group.PictureNormalURL, group.Name);
-                        flpGroups.Controls.Add(groupBox);
-                    }
-                }
-                else
-                {
-                    for (int i = 0; i < DummyData.Groups.Count; i++)
-                    {
-                        AssetBox groupBox = new AssetBox(DummyData.Groups[i]);
-                        flpGroups.Controls.Add(groupBox);
-                    }
-                }
-            }
-            catch (Exception ex)
-            {
-                //errorHandle(flpGroups, ex);
-                for (int i = 0; i < DummyData.Groups.Count; i++)
-                {
-                    AssetBox groupBox = new AssetBox(DummyData.Groups[i]);
-                    flpGroups.Controls.Add(groupBox);
-                }
-            }
-        }
-
-        private void fillPagesTab()
-        {
-            try
-            {
-                if (m_LoggedInUser.LikedPages.Count > 0)
-                {
-                    foreach (Page page in m_LoggedInUser.LikedPages)
-                    {
-                        AssetBox pageBox = new AssetBox(page.URL, page.PictureNormalURL, page.Name);
-                        flpPages.Controls.Add(pageBox);
-                    }
-                }
-                else
-                {
-                    for (int i = 0; i < DummyData.Pages.Count; i++)
-                    {
-                        AssetBox pageBox = new AssetBox(DummyData.Pages[i]);
-                        flpPages.Controls.Add(pageBox);
-                    }
-                }
-            }
-            catch (Exception ex)
-            {
-                //errorHandle(flpPages, ex);
-
-                for (int i = 0; i < DummyData.Pages.Count; i++)
-                {
-                    AssetBox pageBox = new AssetBox(DummyData.Pages[i]);
-                    flpPages.Controls.Add(pageBox);
-                }
-            }
-        }
-
-        private void fillFriendsTab()
-        {
-            try
-            {
-                if (m_LoggedInUser.Friends.Count > 0)
-                {
-                    foreach (User friend in m_LoggedInUser.Friends)
-                    {
-                        AssetBox friendBox = new AssetBox(friend.Link, friend.PictureNormalURL, friend.Name);
-                        flpFriends.Controls.Add(friendBox);
-                    }
-                }
-                else
-                {
-                    for (int j = 0; j < DummyData.Friends.Count; j++)
-                    {
-                        AssetBox friendBox = new AssetBox(DummyData.Friends[j]);
-                        flpFriends.Controls.Add(friendBox);
-                    }
-                }
-            }
-            catch (Exception ex)
-            {
-                //errorHandle(flpFriends, ex);
-
-                for (int j = 0; j < DummyData.Friends.Count; j++)
-                {
-                    AssetBox friendBox = new AssetBox(DummyData.Friends[j]);
-                    flpFriends.Controls.Add(friendBox);
-                }
-            }
-        }
-
-        private void fillPhotosTab()
-        {
-
-
-            try
-            {
-                foreach (Album album in m_LoggedInUser.Albums)
-                {
-                    foreach (Photo pic in album.Photos)
-                    {
-                        AssetBox photoBox = new AssetBox(pic.Link, pic.PictureThumbURL, pic.Name);
-
-                        flpPhotos.Controls.Add(photoBox);
-                    }
-                }
-            }
-            catch 
-            {
-                for (int j = 0; j < DummyData.Photos.Count; j++)
-                {
-                    AssetBox photoBox = new AssetBox(DummyData.Photos[j]);
-                    flpFriends.Controls.Add(photoBox);
-                }
-            }
-        }
-
-        private void fillPostsTab()
-        {
-
-            if (m_LoggedInUser.WallPosts.Count > 0)
-            {
-                foreach (Post post in m_LoggedInUser.WallPosts)
-                {
-                    try
-                    {
-                        PostViewer postViewer = new PostViewer(post);
-                        flpPosts.Controls.Add(postViewer);
-                    }
-                    catch (Exception ex)
-                    {
-                        Console.WriteLine($"Error getting post: {post.Caption}\n{ex.Message}");
-                    }
-                }
-            }
-
-            else
-            {
-                errorHandle(flpPosts, null);
-            }
-        }
-
-
-        //Custom non-intrusive error handler
-        private void errorHandle(FlowLayoutPanel i_flp, Exception ex)
-        {
-            Label errorLabel = new Label();
-            errorLabel.Text = "[Data unavailable]";
-            i_flp.Controls.Add(errorLabel);
-
-            if (ex != null)
-            {
-                Console.WriteLine($"Error getting data to {i_flp.Name}\nError: {ex.Message}");
-            }
-            else
-            {
-                Console.WriteLine($"Error getting data to {i_flp.Name}");
-            }
+            fillFLPWithPictureBoxes(Groups, flpGroups);
         }
 
         //Mouse hover and leave functions for each menu button
@@ -346,56 +170,159 @@ namespace BasicFacebookFeatures
         {
             btnGroups.ForeColor = m_ButtonColor;
         }
-
         private void btnPages_MouseLeave(object sender, EventArgs e)
         {
             btnPages.ForeColor= m_ButtonColor;
         }
-
         private void btnVideos_MouseLeave(object sender, EventArgs e)
         {
             btnVideos.ForeColor= m_ButtonColor;
         }
-
         private void btnFriends_MouseLeave(object sender, EventArgs e)
         {
             btnFriends.ForeColor= m_ButtonColor;    
         }
-
         private void btnAlbums_MouseLeave(object sender, EventArgs e)
         {
             btnAlbums.ForeColor= m_ButtonColor;
         }
-
         private void btnPosts_MouseLeave(object sender, EventArgs e)
         {
             btnPosts.ForeColor= m_ButtonColor;
+        }
+        private void picBoxProfilePic_MouseHover(object sender, EventArgs e)
+        {
+            lblViewProfile.Visible = true;
+            pbMasking.Visible = true;
+        }
+        private void pbMasking_Click(object sender, EventArgs e)
+        {
+            picBoxProfilePic_Click(sender, e);
+        }
+        private void picBoxProfilePic_MouseLeave(object sender, EventArgs e)
+        {
+            lblViewProfile.Visible = false;
+            pbMasking.Visible = false;
+        }
+        private void pbMasking_MouseLeave(object sender, EventArgs e)
+        {
+            lblViewProfile.Visible = false;
+            pbMasking.Visible = false;
         }
 
         //Functions related to extra feature buttons
         private void btnPostStatus_Click(object sender, EventArgs e)
         {
-            FormPostStatus postStatus = new FormPostStatus(m_LoggedInUser);
+            FormPostStatus postStatus = new FormPostStatus(User);
             postStatus.ShowDialog();
         }
 
         private void btnDateFilter_Click(object sender, EventArgs e)
         {
-            DateTime dateFrom = dtpPostDateFrom.Value.Date.Date;
-            DateTime dateTo = dtpPostDateTo.Value.Date.Date;
+            filterPostsByDateVis();
+        }
 
-            FacebookObjectCollection<Post> filteredPosts = new FacebookObjectCollection<Post>();
-
-            foreach (Post post in m_LoggedInUser.WallPosts)
+        private void btnFilterByDatePhotos_Click(object sender, EventArgs e)
+        {
+            filterPhotosByDateVis();
+        }
+        private void btnSortByLikes_Click(object sender, EventArgs e)
+        {
+            switch (cmbSortOrderLikesPages.Text)
             {
-                DateTime postDate = post.CreatedTime.Value.Date;
-
-                if (postDate >= dateFrom && postDate <= dateTo)
-                {
-                    filteredPosts.Add(post);
-                }
+                case "Ascending":
+                    sortByLikes(User.LikedPages, flpPages, eDataTypes.pages, new FBLikesSorter((num1, num2) => num1 < num2));
+                    break;
+                case "Descending":
+                    sortByLikes(User.LikedPages, flpPages, eDataTypes.pages, new FBLikesSorter((num1, num2) => num1 > num2));
+                    break;
             }
-            
+        }
+        private void btnSortVidsByDate_Click(object sender, EventArgs e)
+        {
+            switch (cmbSortOrderDateVids.Text)
+            {
+                case "Ascending":
+                    sortByDate(User.Videos, flpVideos, eDataTypes.videos, new FBDatesSorter((dt1, dt2) => dt1 < dt2));
+                    break;
+                case "Descending":
+                    sortByDate(User.Videos, flpVideos, eDataTypes.videos, new FBDatesSorter((dt1, dt2) => dt1 > dt2));
+                    break;
+            }
+        }
+        private void btnSortByPagesByDate_Click(object sender, EventArgs e)
+        {
+            switch (cmbSortOrderDatePages.Text)
+            {
+                case "Ascending":
+                    sortByDate(User.LikedPages, flpPages, eDataTypes.pages, new FBDatesSorter((dt1, dt2) => dt1 < dt2));
+                    break;
+                case "Descending":
+                    sortByDate(User.LikedPages, flpPages, eDataTypes.pages, new FBDatesSorter((dt1, dt2) => dt1 > dt2));
+                    break;
+            }
+        }
+        private void btnSortVidsByLikes_Click(object sender, EventArgs e)
+        {
+            switch (cmbSortOrderLikesVids.Text)
+            {
+                case "Ascending":
+                    sortByLikes(User.Videos, flpVideos, eDataTypes.videos, new FBLikesSorter((num1, num2) => num1 < num2));
+                    break;
+                case "Descending":
+                    sortByLikes(User.Videos, flpVideos, eDataTypes.videos, new FBLikesSorter((num1, num2) => num1 > num2));
+                    break;
+
+            }
+        }
+        private void btnSortPhotosByLikes_Click(object sender, EventArgs e)
+        {
+            switch (cmbSortOrderLikesPhotos.Text)
+            {
+                case "Ascending":
+                    sortByLikes(User.Photos, flpPhotos, eDataTypes.photos, new FBLikesSorter((num1, num2) => num1 < num2));
+                    break;
+                case "Descending":
+                    sortByLikes(User.Photos, flpPhotos, eDataTypes.photos, new FBLikesSorter((num1, num2) => num1 > num2));
+                    break;
+
+            }
+        }
+        private void btnSortPhotosByDate_Click(object sender, EventArgs e)
+        {
+            switch (cmbSortOrderDatePhotos.Text)
+            {
+                case "Ascending":
+                    sortByDate(User.Photos, flpPhotos, eDataTypes.photos, new FBDatesSorter((dt1, dt2) => dt1 < dt2));
+                    break;
+                case "Descending":
+                    sortByDate(User.Photos, flpPhotos, eDataTypes.photos, new FBDatesSorter((dt1, dt2) => dt1 > dt2));
+                    break;
+            }
+        }
+
+        private void filterPhotosByDateVis()
+        {
+            Collection<DataUnit> filteredPhotos = FBLogic.FilterPhotosByDate(User, dtpFromPhotos.Value.Date.Date, dtpToPhotos.Value.Date.Date);
+
+            if (filteredPhotos.Count > 0)
+            {
+                flpPhotos.Controls.Clear();
+                List<PictureBox> pbPhotos = FBLogic.GetPictureBoxListWithData(filteredPhotos, eDataTypes.photos);
+
+                fillFLPWithPictureBoxes(pbPhotos, flpPhotos);
+
+            }
+            else
+            {
+                MessageBox.Show("Error filtering photos!");
+            }
+        }
+        private void filterPostsByDateVis()
+        {
+
+            FacebookObjectCollection<Post> filteredPosts = FBLogic.FilterPostsByDate(User, dtpPostDateFrom.Value.Date.Date, dtpPostDateTo.Value.Date.Date);
+
             if (filteredPosts.Count > 0)
             {
                 flpPosts.Controls.Clear();
@@ -412,84 +339,72 @@ namespace BasicFacebookFeatures
             }
         }
 
-        private void btnFilterByDatePhotos_Click(object sender, EventArgs e)
+        private void sortByLikes(Collection<DataUnit> i_dataUnits, FlowLayoutPanel i_flp, eDataTypes i_DataType, FBLikesSorter i_Comparison)
         {
-            DateTime dateFrom = dtpFromPhotos.Value.Date.Date;
-            DateTime dateTo = dtpToPhotos.Value.Date.Date;
+            DataUnit[] dataUnitsArr = i_dataUnits.ToArray();
 
-            FacebookObjectCollection<Photo> filteredPhotos = new FacebookObjectCollection<Photo>();
+            i_Comparison.sortLikes(dataUnitsArr);
 
-            foreach (Album album in m_LoggedInUser.Albums)
+            Collection<DataUnit> units = new Collection<DataUnit>();
+            foreach (DataUnit dataunit in dataUnitsArr)
             {
-                foreach(Photo photo in album.Photos)
-                {
-                    DateTime photoDate = photo.CreatedTime.Value.Date;
-
-                    if (photoDate >= dateFrom && photoDate <= dateTo)
-                    {
-                        filteredPhotos.Add(photo);
-                    }
-                }
-
+                units.Add(dataunit);
             }
 
-            if (filteredPhotos.Count > 0)
+            if (units.Count > 0)
             {
-                flpPhotos.Controls.Clear();
-
-                foreach (Photo photo in filteredPhotos)
-                {
-                    AssetBox albumBox = new AssetBox(photo.Link, photo.PictureThumbURL, photo.Name);
-                    flpPhotos.Controls.Add(albumBox);
-                }
+                i_flp.Controls.Clear();
+                fillFLPWithPictureBoxes(FBLogic.GetPictureBoxListWithData(units, i_DataType), i_flp);
             }
-            else
+        }
+        private void sortByDate(Collection<DataUnit> i_DataUnits, FlowLayoutPanel i_flp, eDataTypes i_DataType, FBDatesSorter i_Comparison)
+        {
+            DataUnit[] dataUnitsArr = i_DataUnits.ToArray();
+
+            i_Comparison.SortDate(dataUnitsArr);
+
+            Collection<DataUnit> units = new Collection<DataUnit>();
+            foreach (DataUnit dataunit in dataUnitsArr)
             {
-                MessageBox.Show("Error filtering photos!");
+                units.Add(dataunit);
+            }
+
+            if (units.Count > 0)
+            {
+                i_flp.Controls.Clear();
+                fillFLPWithPictureBoxes(FBLogic.GetPictureBoxListWithData(units, i_DataType), i_flp);
             }
         }
 
-        private void btnSortByLikes_Click(object sender, EventArgs e)
+        private void fillFLPWithPictureBoxes(List<PictureBox> i_Controls, FlowLayoutPanel i_flp)
         {
-            sortPagesByLikes();
-        }
-
-        private void sortPagesByLikes()
-        {
-            List<Page> sortedPages = new List<Page>();
-
-            foreach (Page page in m_LoggedInUser.LikedPages)
-            {
-                sortedPages.Add(page);
-            }
-            flpPages.Controls.Clear();
-
             try
             {
-                sortedPages.Sort(compareTwoPageLikeNumbers);
+                foreach (PictureBox pb in i_Controls)
+                {
+                    i_flp.Controls.Add(pb);
+                }
             }
             catch (Exception ex)
             {
-                MessageBox.Show($"Error sorting pages!{ex.Message}");
-            }
-
-            foreach (Page page in sortedPages)
-            {
-                AssetBox pageBox = new AssetBox(page.URL,page.PictureNormalURL,page.Name);
-                flpPages.Controls.Add(pageBox);
+                i_flp.Controls.Add(FBLogic.ErrorHandle(ex));
             }
         }
-
-        private int compareTwoPageLikeNumbers(Page a, Page b)
+        private void fillFLPWithPostViewers()
         {
-            if (a.LikesCount == null || b.LikesCount == null)
+            try
             {
-                return 0;
+                foreach (PostViewer post in Posts)
+                {
+                    flpPosts.Controls.Add(post);
+                }
             }
-            else
+            catch (Exception ex)
             {
-                return a.LikesCount.Value.CompareTo(b.LikesCount.Value);
+                flpPosts.Controls.Add(FBLogic.ErrorHandle(ex));
             }
         }
+
+
     }
 }

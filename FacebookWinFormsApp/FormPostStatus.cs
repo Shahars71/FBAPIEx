@@ -12,16 +12,23 @@ using FacebookWrapper.ObjectModel;
 
 namespace BasicFacebookFeatures
 {
+    // $G$ SFN-001 (-10) lacking feature
     public partial class FormPostStatus : Form
     {
-        User m_LoggedInUser;
-        public FormPostStatus(User user)
+
+        UserFacade m_LoggedInUser;
+        public FormPostStatus(UserFacade i_user)
         {
             InitializeComponent();
-            m_LoggedInUser = user;
+            m_LoggedInUser = i_user;
         }
 
         private void button1_Click(object sender, EventArgs e)
+        {
+            postStatus();
+        }
+
+        private void postStatus()
         {
             try
             {

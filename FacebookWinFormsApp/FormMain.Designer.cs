@@ -47,6 +47,10 @@
             this.dtpPostDateTo = new System.Windows.Forms.DateTimePicker();
             this.flpPosts = new System.Windows.Forms.FlowLayoutPanel();
             this.tabPhotos = new System.Windows.Forms.TabPage();
+            this.cmbSortOrderDatePhotos = new System.Windows.Forms.ComboBox();
+            this.btnSortPhotosByDate = new System.Windows.Forms.Button();
+            this.btnSortPhotosByLikes = new System.Windows.Forms.Button();
+            this.cmbSortOrderLikesPhotos = new System.Windows.Forms.ComboBox();
             this.btnFilterByDatePhotos = new System.Windows.Forms.Button();
             this.panel2 = new System.Windows.Forms.Panel();
             this.label1 = new System.Windows.Forms.Label();
@@ -57,14 +61,23 @@
             this.tabFriends = new System.Windows.Forms.TabPage();
             this.flpFriends = new System.Windows.Forms.FlowLayoutPanel();
             this.tabVideos = new System.Windows.Forms.TabPage();
+            this.cmbSortOrderDateVids = new System.Windows.Forms.ComboBox();
+            this.btnSortVidsByDate = new System.Windows.Forms.Button();
+            this.cmbSortOrderLikesVids = new System.Windows.Forms.ComboBox();
+            this.btnSortVidsByLikes = new System.Windows.Forms.Button();
             this.flpVideos = new System.Windows.Forms.FlowLayoutPanel();
             this.tabPages = new System.Windows.Forms.TabPage();
+            this.cmbSortOrderDatePages = new System.Windows.Forms.ComboBox();
+            this.btnSortByPagesByDate = new System.Windows.Forms.Button();
+            this.cmbSortOrderLikesPages = new System.Windows.Forms.ComboBox();
+            this.btnSortByPagesByLikes = new System.Windows.Forms.Button();
             this.flpPages = new System.Windows.Forms.FlowLayoutPanel();
             this.tabGroups = new System.Windows.Forms.TabPage();
             this.flpGroups = new System.Windows.Forms.FlowLayoutPanel();
             this.picBoxProfilePic = new System.Windows.Forms.PictureBox();
             this.picBoxBorder = new System.Windows.Forms.PictureBox();
-            this.btnSortByLikes = new System.Windows.Forms.Button();
+            this.lblViewProfile = new System.Windows.Forms.Label();
+            this.pbMasking = new System.Windows.Forms.PictureBox();
             this.flpMainControls.SuspendLayout();
             this.tabControlMain.SuspendLayout();
             this.tabPosts.SuspendLayout();
@@ -77,6 +90,7 @@
             this.tabGroups.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.picBoxProfilePic)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.picBoxBorder)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pbMasking)).BeginInit();
             this.SuspendLayout();
             // 
             // labelUserName
@@ -90,7 +104,6 @@
             this.labelUserName.Size = new System.Drawing.Size(171, 37);
             this.labelUserName.TabIndex = 1;
             this.labelUserName.Text = "Full Name";
-            this.labelUserName.Click += new System.EventHandler(this.labelUserName_Click);
             // 
             // flpMainControls
             // 
@@ -205,7 +218,7 @@
             this.tabControlMain.Controls.Add(this.tabVideos);
             this.tabControlMain.Controls.Add(this.tabPages);
             this.tabControlMain.Controls.Add(this.tabGroups);
-            this.tabControlMain.ItemSize = new System.Drawing.Size(0, 1);
+            this.tabControlMain.ItemSize = new System.Drawing.Size(50, 30);
             this.tabControlMain.Location = new System.Drawing.Point(12, 119);
             this.tabControlMain.Name = "tabControlMain";
             this.tabControlMain.SelectedIndex = 0;
@@ -221,10 +234,10 @@
             this.tabPosts.Controls.Add(this.btnDateFilter);
             this.tabPosts.Controls.Add(this.panel1);
             this.tabPosts.Controls.Add(this.flpPosts);
-            this.tabPosts.Location = new System.Drawing.Point(4, 5);
+            this.tabPosts.Location = new System.Drawing.Point(4, 34);
             this.tabPosts.Name = "tabPosts";
             this.tabPosts.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPosts.Size = new System.Drawing.Size(901, 441);
+            this.tabPosts.Size = new System.Drawing.Size(901, 412);
             this.tabPosts.TabIndex = 0;
             this.tabPosts.Text = "Posts";
             // 
@@ -306,15 +319,67 @@
             // tabPhotos
             // 
             this.tabPhotos.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(147)))), ((int)(((byte)(193)))), ((int)(((byte)(244)))));
+            this.tabPhotos.Controls.Add(this.cmbSortOrderDatePhotos);
+            this.tabPhotos.Controls.Add(this.btnSortPhotosByDate);
+            this.tabPhotos.Controls.Add(this.btnSortPhotosByLikes);
+            this.tabPhotos.Controls.Add(this.cmbSortOrderLikesPhotos);
             this.tabPhotos.Controls.Add(this.btnFilterByDatePhotos);
             this.tabPhotos.Controls.Add(this.panel2);
             this.tabPhotos.Controls.Add(this.flpPhotos);
-            this.tabPhotos.Location = new System.Drawing.Point(4, 5);
+            this.tabPhotos.Location = new System.Drawing.Point(4, 34);
             this.tabPhotos.Name = "tabPhotos";
             this.tabPhotos.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPhotos.Size = new System.Drawing.Size(901, 441);
+            this.tabPhotos.Size = new System.Drawing.Size(901, 412);
             this.tabPhotos.TabIndex = 1;
             this.tabPhotos.Text = "Photos";
+            // 
+            // cmbSortOrderDatePhotos
+            // 
+            this.cmbSortOrderDatePhotos.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cmbSortOrderDatePhotos.FormattingEnabled = true;
+            this.cmbSortOrderDatePhotos.Items.AddRange(new object[] {
+            "Ascending",
+            "Descending"});
+            this.cmbSortOrderDatePhotos.Location = new System.Drawing.Point(577, 37);
+            this.cmbSortOrderDatePhotos.Name = "cmbSortOrderDatePhotos";
+            this.cmbSortOrderDatePhotos.Size = new System.Drawing.Size(155, 21);
+            this.cmbSortOrderDatePhotos.Sorted = true;
+            this.cmbSortOrderDatePhotos.TabIndex = 12;
+            // 
+            // btnSortPhotosByDate
+            // 
+            this.btnSortPhotosByDate.Font = new System.Drawing.Font("Arial Rounded MT Bold", 15.75F);
+            this.btnSortPhotosByDate.Location = new System.Drawing.Point(577, 0);
+            this.btnSortPhotosByDate.Name = "btnSortPhotosByDate";
+            this.btnSortPhotosByDate.Size = new System.Drawing.Size(155, 36);
+            this.btnSortPhotosByDate.TabIndex = 11;
+            this.btnSortPhotosByDate.Text = "Sort By Date";
+            this.btnSortPhotosByDate.UseVisualStyleBackColor = true;
+            this.btnSortPhotosByDate.Click += new System.EventHandler(this.btnSortPhotosByDate_Click);
+            // 
+            // btnSortPhotosByLikes
+            // 
+            this.btnSortPhotosByLikes.Font = new System.Drawing.Font("Arial Rounded MT Bold", 15.75F);
+            this.btnSortPhotosByLikes.Location = new System.Drawing.Point(405, 0);
+            this.btnSortPhotosByLikes.Name = "btnSortPhotosByLikes";
+            this.btnSortPhotosByLikes.Size = new System.Drawing.Size(155, 36);
+            this.btnSortPhotosByLikes.TabIndex = 10;
+            this.btnSortPhotosByLikes.Text = "Sort By Likes";
+            this.btnSortPhotosByLikes.UseVisualStyleBackColor = true;
+            this.btnSortPhotosByLikes.Click += new System.EventHandler(this.btnSortPhotosByLikes_Click);
+            // 
+            // cmbSortOrderLikesPhotos
+            // 
+            this.cmbSortOrderLikesPhotos.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cmbSortOrderLikesPhotos.FormattingEnabled = true;
+            this.cmbSortOrderLikesPhotos.Items.AddRange(new object[] {
+            "Ascending",
+            "Descending"});
+            this.cmbSortOrderLikesPhotos.Location = new System.Drawing.Point(405, 37);
+            this.cmbSortOrderLikesPhotos.Name = "cmbSortOrderLikesPhotos";
+            this.cmbSortOrderLikesPhotos.Size = new System.Drawing.Size(155, 21);
+            this.cmbSortOrderLikesPhotos.Sorted = true;
+            this.cmbSortOrderLikesPhotos.TabIndex = 9;
             // 
             // btnFilterByDatePhotos
             // 
@@ -385,10 +450,10 @@
             // 
             this.tabFriends.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(147)))), ((int)(((byte)(193)))), ((int)(((byte)(244)))));
             this.tabFriends.Controls.Add(this.flpFriends);
-            this.tabFriends.Location = new System.Drawing.Point(4, 5);
+            this.tabFriends.Location = new System.Drawing.Point(4, 34);
             this.tabFriends.Name = "tabFriends";
             this.tabFriends.Padding = new System.Windows.Forms.Padding(3);
-            this.tabFriends.Size = new System.Drawing.Size(901, 441);
+            this.tabFriends.Size = new System.Drawing.Size(901, 412);
             this.tabFriends.TabIndex = 2;
             this.tabFriends.Text = "Friends";
             // 
@@ -397,40 +462,143 @@
             this.flpFriends.Dock = System.Windows.Forms.DockStyle.Fill;
             this.flpFriends.Location = new System.Drawing.Point(3, 3);
             this.flpFriends.Name = "flpFriends";
-            this.flpFriends.Size = new System.Drawing.Size(895, 435);
+            this.flpFriends.Size = new System.Drawing.Size(895, 406);
             this.flpFriends.TabIndex = 0;
             // 
             // tabVideos
             // 
+            this.tabVideos.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(147)))), ((int)(((byte)(193)))), ((int)(((byte)(244)))));
+            this.tabVideos.Controls.Add(this.cmbSortOrderDateVids);
+            this.tabVideos.Controls.Add(this.btnSortVidsByDate);
+            this.tabVideos.Controls.Add(this.cmbSortOrderLikesVids);
+            this.tabVideos.Controls.Add(this.btnSortVidsByLikes);
             this.tabVideos.Controls.Add(this.flpVideos);
-            this.tabVideos.Location = new System.Drawing.Point(4, 5);
+            this.tabVideos.Location = new System.Drawing.Point(4, 34);
             this.tabVideos.Name = "tabVideos";
             this.tabVideos.Padding = new System.Windows.Forms.Padding(3);
-            this.tabVideos.Size = new System.Drawing.Size(901, 441);
+            this.tabVideos.Size = new System.Drawing.Size(901, 412);
             this.tabVideos.TabIndex = 3;
             this.tabVideos.Text = "Videos";
-            this.tabVideos.UseVisualStyleBackColor = true;
+            // 
+            // cmbSortOrderDateVids
+            // 
+            this.cmbSortOrderDateVids.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cmbSortOrderDateVids.FormattingEnabled = true;
+            this.cmbSortOrderDateVids.Items.AddRange(new object[] {
+            "Ascending",
+            "Descending"});
+            this.cmbSortOrderDateVids.Location = new System.Drawing.Point(164, 40);
+            this.cmbSortOrderDateVids.Name = "cmbSortOrderDateVids";
+            this.cmbSortOrderDateVids.Size = new System.Drawing.Size(155, 21);
+            this.cmbSortOrderDateVids.Sorted = true;
+            this.cmbSortOrderDateVids.TabIndex = 14;
+            // 
+            // btnSortVidsByDate
+            // 
+            this.btnSortVidsByDate.Font = new System.Drawing.Font("Arial Rounded MT Bold", 15.75F);
+            this.btnSortVidsByDate.Location = new System.Drawing.Point(164, 3);
+            this.btnSortVidsByDate.Name = "btnSortVidsByDate";
+            this.btnSortVidsByDate.Size = new System.Drawing.Size(155, 36);
+            this.btnSortVidsByDate.TabIndex = 13;
+            this.btnSortVidsByDate.Text = "Sort By Date";
+            this.btnSortVidsByDate.UseVisualStyleBackColor = true;
+            this.btnSortVidsByDate.Click += new System.EventHandler(this.btnSortVidsByDate_Click);
+            // 
+            // cmbSortOrderLikesVids
+            // 
+            this.cmbSortOrderLikesVids.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cmbSortOrderLikesVids.FormattingEnabled = true;
+            this.cmbSortOrderLikesVids.Items.AddRange(new object[] {
+            "Ascending",
+            "Descending"});
+            this.cmbSortOrderLikesVids.Location = new System.Drawing.Point(3, 39);
+            this.cmbSortOrderLikesVids.Name = "cmbSortOrderLikesVids";
+            this.cmbSortOrderLikesVids.Size = new System.Drawing.Size(155, 21);
+            this.cmbSortOrderLikesVids.Sorted = true;
+            this.cmbSortOrderLikesVids.TabIndex = 2;
+            // 
+            // btnSortVidsByLikes
+            // 
+            this.btnSortVidsByLikes.Font = new System.Drawing.Font("Arial Rounded MT Bold", 15.75F);
+            this.btnSortVidsByLikes.Location = new System.Drawing.Point(3, 3);
+            this.btnSortVidsByLikes.Name = "btnSortVidsByLikes";
+            this.btnSortVidsByLikes.Size = new System.Drawing.Size(155, 36);
+            this.btnSortVidsByLikes.TabIndex = 1;
+            this.btnSortVidsByLikes.Text = "Sort By Likes";
+            this.btnSortVidsByLikes.UseVisualStyleBackColor = true;
+            this.btnSortVidsByLikes.Click += new System.EventHandler(this.btnSortVidsByLikes_Click);
             // 
             // flpVideos
             // 
             this.flpVideos.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(147)))), ((int)(((byte)(193)))), ((int)(((byte)(244)))));
-            this.flpVideos.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.flpVideos.Location = new System.Drawing.Point(3, 3);
+            this.flpVideos.Dock = System.Windows.Forms.DockStyle.Bottom;
+            this.flpVideos.Location = new System.Drawing.Point(3, 64);
             this.flpVideos.Name = "flpVideos";
-            this.flpVideos.Size = new System.Drawing.Size(895, 435);
+            this.flpVideos.Size = new System.Drawing.Size(895, 345);
             this.flpVideos.TabIndex = 0;
             // 
             // tabPages
             // 
             this.tabPages.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(147)))), ((int)(((byte)(193)))), ((int)(((byte)(244)))));
-            this.tabPages.Controls.Add(this.btnSortByLikes);
+            this.tabPages.Controls.Add(this.cmbSortOrderDatePages);
+            this.tabPages.Controls.Add(this.btnSortByPagesByDate);
+            this.tabPages.Controls.Add(this.cmbSortOrderLikesPages);
+            this.tabPages.Controls.Add(this.btnSortByPagesByLikes);
             this.tabPages.Controls.Add(this.flpPages);
-            this.tabPages.Location = new System.Drawing.Point(4, 5);
+            this.tabPages.Location = new System.Drawing.Point(4, 34);
             this.tabPages.Name = "tabPages";
             this.tabPages.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPages.Size = new System.Drawing.Size(901, 441);
+            this.tabPages.Size = new System.Drawing.Size(901, 412);
             this.tabPages.TabIndex = 4;
             this.tabPages.Text = "Pages";
+            // 
+            // cmbSortOrderDatePages
+            // 
+            this.cmbSortOrderDatePages.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cmbSortOrderDatePages.FormattingEnabled = true;
+            this.cmbSortOrderDatePages.Items.AddRange(new object[] {
+            "Ascending",
+            "Descending"});
+            this.cmbSortOrderDatePages.Location = new System.Drawing.Point(164, 41);
+            this.cmbSortOrderDatePages.Name = "cmbSortOrderDatePages";
+            this.cmbSortOrderDatePages.Size = new System.Drawing.Size(155, 21);
+            this.cmbSortOrderDatePages.Sorted = true;
+            this.cmbSortOrderDatePages.TabIndex = 16;
+            // 
+            // btnSortByPagesByDate
+            // 
+            this.btnSortByPagesByDate.Font = new System.Drawing.Font("Arial Rounded MT Bold", 15.75F);
+            this.btnSortByPagesByDate.Location = new System.Drawing.Point(164, 4);
+            this.btnSortByPagesByDate.Name = "btnSortByPagesByDate";
+            this.btnSortByPagesByDate.Size = new System.Drawing.Size(155, 36);
+            this.btnSortByPagesByDate.TabIndex = 15;
+            this.btnSortByPagesByDate.Text = "Sort By Date";
+            this.btnSortByPagesByDate.UseVisualStyleBackColor = true;
+            this.btnSortByPagesByDate.Click += new System.EventHandler(this.btnSortByPagesByDate_Click);
+            // 
+            // cmbSortOrderLikesPages
+            // 
+            this.cmbSortOrderLikesPages.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cmbSortOrderLikesPages.FormattingEnabled = true;
+            this.cmbSortOrderLikesPages.Items.AddRange(new object[] {
+            "Ascending",
+            "Descending"});
+            this.cmbSortOrderLikesPages.Location = new System.Drawing.Point(3, 39);
+            this.cmbSortOrderLikesPages.Name = "cmbSortOrderLikesPages";
+            this.cmbSortOrderLikesPages.Size = new System.Drawing.Size(155, 21);
+            this.cmbSortOrderLikesPages.Sorted = true;
+            this.cmbSortOrderLikesPages.TabIndex = 3;
+            // 
+            // btnSortByPagesByLikes
+            // 
+            this.btnSortByPagesByLikes.Font = new System.Drawing.Font("Arial Rounded MT Bold", 15.75F);
+            this.btnSortByPagesByLikes.Location = new System.Drawing.Point(3, 4);
+            this.btnSortByPagesByLikes.Name = "btnSortByPagesByLikes";
+            this.btnSortByPagesByLikes.Size = new System.Drawing.Size(155, 36);
+            this.btnSortByPagesByLikes.TabIndex = 1;
+            this.btnSortByPagesByLikes.Text = "Sort By Likes";
+            this.btnSortByPagesByLikes.UseVisualStyleBackColor = true;
+            this.btnSortByPagesByLikes.Click += new System.EventHandler(this.btnSortByLikes_Click);
             // 
             // flpPages
             // 
@@ -439,15 +607,14 @@
             this.flpPages.Name = "flpPages";
             this.flpPages.Size = new System.Drawing.Size(895, 355);
             this.flpPages.TabIndex = 0;
-            this.flpPages.Click += new System.EventHandler(this.flpPages_Click);
             // 
             // tabGroups
             // 
             this.tabGroups.Controls.Add(this.flpGroups);
-            this.tabGroups.Location = new System.Drawing.Point(4, 5);
+            this.tabGroups.Location = new System.Drawing.Point(4, 34);
             this.tabGroups.Name = "tabGroups";
             this.tabGroups.Padding = new System.Windows.Forms.Padding(3);
-            this.tabGroups.Size = new System.Drawing.Size(901, 441);
+            this.tabGroups.Size = new System.Drawing.Size(901, 412);
             this.tabGroups.TabIndex = 5;
             this.tabGroups.Text = "Groups";
             this.tabGroups.UseVisualStyleBackColor = true;
@@ -458,7 +625,7 @@
             this.flpGroups.Dock = System.Windows.Forms.DockStyle.Fill;
             this.flpGroups.Location = new System.Drawing.Point(3, 3);
             this.flpGroups.Name = "flpGroups";
-            this.flpGroups.Size = new System.Drawing.Size(895, 435);
+            this.flpGroups.Size = new System.Drawing.Size(895, 406);
             this.flpGroups.TabIndex = 0;
             // 
             // picBoxProfilePic
@@ -469,6 +636,8 @@
             this.picBoxProfilePic.TabIndex = 0;
             this.picBoxProfilePic.TabStop = false;
             this.picBoxProfilePic.Click += new System.EventHandler(this.picBoxProfilePic_Click);
+            this.picBoxProfilePic.MouseLeave += new System.EventHandler(this.picBoxProfilePic_MouseLeave);
+            this.picBoxProfilePic.MouseHover += new System.EventHandler(this.picBoxProfilePic_MouseHover);
             // 
             // picBoxBorder
             // 
@@ -480,22 +649,40 @@
             this.picBoxBorder.TabIndex = 3;
             this.picBoxBorder.TabStop = false;
             // 
-            // btnSortByLikes
+            // lblViewProfile
             // 
-            this.btnSortByLikes.Font = new System.Drawing.Font("Arial Rounded MT Bold", 15.75F);
-            this.btnSortByLikes.Location = new System.Drawing.Point(3, 4);
-            this.btnSortByLikes.Name = "btnSortByLikes";
-            this.btnSortByLikes.Size = new System.Drawing.Size(155, 55);
-            this.btnSortByLikes.TabIndex = 1;
-            this.btnSortByLikes.Text = "Sort By Likes";
-            this.btnSortByLikes.UseVisualStyleBackColor = true;
-            this.btnSortByLikes.Click += new System.EventHandler(this.btnSortByLikes_Click);
+            this.lblViewProfile.AutoSize = true;
+            this.lblViewProfile.BackColor = System.Drawing.Color.Gray;
+            this.lblViewProfile.Enabled = false;
+            this.lblViewProfile.Font = new System.Drawing.Font("Arial Rounded MT Bold", 15.75F);
+            this.lblViewProfile.Location = new System.Drawing.Point(26, 37);
+            this.lblViewProfile.Name = "lblViewProfile";
+            this.lblViewProfile.Size = new System.Drawing.Size(77, 48);
+            this.lblViewProfile.TabIndex = 6;
+            this.lblViewProfile.Text = "View \r\nProfile";
+            this.lblViewProfile.TextAlign = System.Drawing.ContentAlignment.TopCenter;
+            this.lblViewProfile.Visible = false;
+            // 
+            // pbMasking
+            // 
+            this.pbMasking.BackColor = System.Drawing.Color.Gray;
+            this.pbMasking.Enabled = false;
+            this.pbMasking.Location = new System.Drawing.Point(13, 13);
+            this.pbMasking.Name = "pbMasking";
+            this.pbMasking.Size = new System.Drawing.Size(100, 100);
+            this.pbMasking.TabIndex = 7;
+            this.pbMasking.TabStop = false;
+            this.pbMasking.Visible = false;
+            this.pbMasking.Click += new System.EventHandler(this.pbMasking_Click);
+            this.pbMasking.MouseLeave += new System.EventHandler(this.pbMasking_MouseLeave);
             // 
             // FormMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(933, 581);
+            this.Controls.Add(this.lblViewProfile);
+            this.Controls.Add(this.pbMasking);
             this.Controls.Add(this.tabControlMain);
             this.Controls.Add(this.flpMainControls);
             this.Controls.Add(this.labelUserName);
@@ -517,6 +704,7 @@
             this.tabGroups.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.picBoxProfilePic)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.picBoxBorder)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pbMasking)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -560,6 +748,19 @@
         private System.Windows.Forms.DateTimePicker dtpFromPhotos;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.DateTimePicker dtpToPhotos;
-        private System.Windows.Forms.Button btnSortByLikes;
+        private System.Windows.Forms.Button btnSortByPagesByLikes;
+        private System.Windows.Forms.Button btnSortVidsByLikes;
+        private System.Windows.Forms.ComboBox cmbSortOrderLikesVids;
+        private System.Windows.Forms.ComboBox cmbSortOrderLikesPages;
+        private System.Windows.Forms.Button btnSortPhotosByLikes;
+        private System.Windows.Forms.ComboBox cmbSortOrderLikesPhotos;
+        private System.Windows.Forms.ComboBox cmbSortOrderDatePhotos;
+        private System.Windows.Forms.Button btnSortPhotosByDate;
+        private System.Windows.Forms.ComboBox cmbSortOrderDateVids;
+        private System.Windows.Forms.Button btnSortVidsByDate;
+        private System.Windows.Forms.ComboBox cmbSortOrderDatePages;
+        private System.Windows.Forms.Button btnSortByPagesByDate;
+        private System.Windows.Forms.Label lblViewProfile;
+        private System.Windows.Forms.PictureBox pbMasking;
     }
 }

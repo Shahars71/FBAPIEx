@@ -1,22 +1,37 @@
 ﻿using System.Drawing;
+using System.Drawing.Imaging;
+using System.IO;
+using System.Net;
+using System.Threading.Tasks;
+using System.Net.Http;
+using System.ComponentModel;
+using System;
 
 namespace BasicFacebookFeatures
 {
     public class DataUnit
     {
-        private string m_Name;
-        private Image m_Image;
-        private string m_Link;
+        // $G$ NTT-999 (-10) You should use C# 3.0 features.
+        public string Name { get; set; }  = string.Empty;
+        public string ImageURL { get; set; } = null;
+        public string Link { get; set; } = string.Empty;
+        public DateTime? CreatedTime { get; set; } = DateTime.Now;
+        public int LikesCount { get; set; } = 0;
 
-        public Image Image { get => m_Image; set => m_Image = value; }
-        public string Name { get => m_Name; set => m_Name = value; }
-        public string Link { get => m_Link; set => m_Link = value; }
-
-        public DataUnit(string name, Image image, string link)
+        public DataUnit(string i_name, string i_imageURL, string i_link)
         {
-            m_Name = name;
-            m_Image = image;
-            m_Link = link;
+            Name = i_name;
+            ImageURL = i_imageURL;
+            Link = i_link;
+        }
+        public DataUnit() { }
+        public DataUnit(string i_name, string i_imageURL, string i_link, DateTime? i_CreatedTime, int i_LikesCount)
+        {
+            Name = i_name;
+            ImageURL = i_imageURL;
+            Link = i_link;
+            CreatedTime= i_CreatedTime;
+            LikesCount = i_LikesCount;
         }
     }
 }

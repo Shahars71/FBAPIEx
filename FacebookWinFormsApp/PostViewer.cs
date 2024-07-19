@@ -6,6 +6,7 @@ using System.Data;
 using System.Drawing;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Windows.Forms.Design;
@@ -21,7 +22,8 @@ namespace BasicFacebookFeatures
         {
             InitializeComponent();
             m_Post = post;
-            initializePost();
+
+            new Thread(() => initializePost()).Start();
         }
 
         private void initializePost()
@@ -98,6 +100,16 @@ namespace BasicFacebookFeatures
 
         private void btnLike_Click(object sender, EventArgs e)
         {
+            likeButton();
+        }
+
+        private void btnUnlike_Click(object sender, EventArgs e)
+        {
+            unlikeButton();
+        }
+
+        private void likeButton()
+        {
             try
             {
                 m_Post.Like();
@@ -111,8 +123,7 @@ namespace BasicFacebookFeatures
                 MessageBox.Show($"{ex.Message}");
             }
         }
-
-        private void btnUnlike_Click(object sender, EventArgs e)
+        private void unlikeButton()
         {
             try
             {

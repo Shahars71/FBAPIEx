@@ -10,6 +10,7 @@ using System.Windows.Forms;
 
 namespace BasicFacebookFeatures
 {
+    // $G$ DSN-999 (-5) this class is redundant
     public partial class AssetBox : UserControl
     {
         private string m_URL;
@@ -29,7 +30,6 @@ namespace BasicFacebookFeatures
         {
             InitializeComponent();
             m_Name = fakeData.Name;
-            picBoxAsset.Image = fakeData.Image;
             m_URL = fakeData.Link;
             initializeAssetPictureBox();
         }
@@ -41,6 +41,8 @@ namespace BasicFacebookFeatures
                 picBoxAsset.LoadAsync(m_PicURL);
 
             }
+
+            
 
             ToolTip toolTipName = new ToolTip();
             toolTipName.SetToolTip(picBoxAsset, m_Name);
