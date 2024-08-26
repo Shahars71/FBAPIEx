@@ -12,7 +12,7 @@ namespace BasicFacebookFeatures
         public Func<int, int, bool> LikesComparingMethod { get; set; }
         public FBLikesSorter(Func<int, int, bool> likesComparingMethod) => LikesComparingMethod = likesComparingMethod;
 
-        public void sortLikes(DataUnit[] i_Likes)
+        public void SortLikes(DataUnit[] i_Likes)
         {
             for (int g = i_Likes.Length / 2; g > 0; g /= 2)
             {

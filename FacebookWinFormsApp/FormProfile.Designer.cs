@@ -67,7 +67,6 @@
             aboutLabel.Size = new System.Drawing.Size(38, 13);
             aboutLabel.TabIndex = 10;
             aboutLabel.Text = "About:";
-            aboutLabel.Click += new System.EventHandler(this.aboutLabel_Click);
             // 
             // birthdayLabel
             // 
@@ -128,7 +127,6 @@
             relationshipStatusLabel.Size = new System.Drawing.Size(153, 17);
             relationshipStatusLabel.TabIndex = 26;
             relationshipStatusLabel.Text = "Relationship Status:";
-            relationshipStatusLabel.Click += new System.EventHandler(this.relationshipStatusLabel_Click);
             // 
             // picBoxProfilePic
             // 
@@ -146,12 +144,10 @@
             this.aboutTextBox.Name = "aboutTextBox";
             this.aboutTextBox.Size = new System.Drawing.Size(183, 71);
             this.aboutTextBox.TabIndex = 11;
-            this.aboutTextBox.TextChanged += new System.EventHandler(this.aboutTextBox_TextChanged);
             // 
             // userFacadeBindingSource
             // 
             this.userFacadeBindingSource.DataSource = typeof(BasicFacebookFeatures.UserFacade);
-            this.userFacadeBindingSource.CurrentChanged += new System.EventHandler(this.userFacadeBindingSource_CurrentChanged);
             // 
             // birthdayLabel1
             // 
@@ -172,7 +168,6 @@
             this.genderLabel1.Size = new System.Drawing.Size(100, 23);
             this.genderLabel1.TabIndex = 17;
             this.genderLabel1.Text = "label1";
-            this.genderLabel1.Click += new System.EventHandler(this.genderLabel1_Click);
             // 
             // hometownLabel1
             // 
@@ -245,7 +240,6 @@
             this.lblEmail.Size = new System.Drawing.Size(47, 15);
             this.lblEmail.TabIndex = 41;
             this.lblEmail.Text = "label1";
-            this.lblEmail.Click += new System.EventHandler(this.label1_Click);
             // 
             // FormProfile
             // 
@@ -270,7 +264,6 @@
             this.Controls.Add(this.relationshipStatusLabel1);
             this.Controls.Add(this.picBoxProfilePic);
             this.Name = "FormProfile";
-            this.Load += new System.EventHandler(this.FormProfile_Load);
             ((System.ComponentModel.ISupportInitialize)(this.picBoxProfilePic)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.userFacadeBindingSource)).EndInit();
             this.ResumeLayout(false);

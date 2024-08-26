@@ -250,18 +250,6 @@ namespace BasicFacebookFeatures
                     break;
             }
         }
-        private void btnSortByPagesByDate_Click(object sender, EventArgs e)
-        {
-            switch (cmbSortOrderDatePages.Text)
-            {
-                case "Ascending":
-                    sortByDate(User.LikedPages, flpPages, eDataTypes.pages, new FBDatesSorter((dt1, dt2) => dt1 < dt2));
-                    break;
-                case "Descending":
-                    sortByDate(User.LikedPages, flpPages, eDataTypes.pages, new FBDatesSorter((dt1, dt2) => dt1 > dt2));
-                    break;
-            }
-        }
         private void btnSortVidsByLikes_Click(object sender, EventArgs e)
         {
             switch (cmbSortOrderLikesVids.Text)
@@ -343,7 +331,7 @@ namespace BasicFacebookFeatures
         {
             DataUnit[] dataUnitsArr = i_dataUnits.ToArray();
 
-            i_Comparison.sortLikes(dataUnitsArr);
+            i_Comparison.SortLikes(dataUnitsArr);
 
             Collection<DataUnit> units = new Collection<DataUnit>();
             foreach (DataUnit dataunit in dataUnitsArr)

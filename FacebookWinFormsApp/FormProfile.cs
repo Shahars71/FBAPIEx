@@ -153,58 +153,9 @@ namespace BasicFacebookFeatures
             
         }
 
-        private void userBindingSource_CurrentChanged(object sender, EventArgs e)
-        {
-
-        }
-
-        private void panel1_Paint(object sender, PaintEventArgs e)
-        {
-
-        }
-
-        private void FormProfile_Load(object sender, EventArgs e)
-        {
-
-        }
-
-        private void aboutTextBox_TextChanged(object sender, EventArgs e)
-        {
-
-        }
-
-        private void aboutLabel_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void relationshipStatusLabel_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void genderLabel1_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void userFacadeBindingSource_CurrentChanged(object sender, EventArgs e)
-        {
-
-        }
-
-        private void emailLinkLabel_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
-        {
-        }
-
         private void linkLabelFBProfile_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
             System.Diagnostics.Process.Start(m_User.Link);
-        }
-
-        private void label1_Click(object sender, EventArgs e)
-        {
-
         }
     }
 }

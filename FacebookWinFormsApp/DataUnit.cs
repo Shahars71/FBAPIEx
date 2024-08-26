@@ -11,12 +11,16 @@ namespace BasicFacebookFeatures
 {
     public class DataUnit
     {
-        // $G$ NTT-999 (-10) You should use C# 3.0 features.
         public string Name { get; set; }  = string.Empty;
         public string ImageURL { get; set; } = null;
         public string Link { get; set; } = string.Empty;
         public DateTime? CreatedTime { get; set; } = DateTime.Now;
         public int LikesCount { get; set; } = 0;
+
+        public DataUnit(string name, string imageURL, string link, int likesCount) : this(name, imageURL, link)
+        {
+            LikesCount = likesCount;
+        }
 
         public DataUnit(string i_name, string i_imageURL, string i_link)
         {

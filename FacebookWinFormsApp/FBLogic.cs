@@ -143,17 +143,6 @@ namespace BasicFacebookFeatures
 
 
         }
-        public static int CompareTwoPageLikeNumbers(Page i_a, Page i_b)
-        {
-            if (i_a.LikesCount == null || i_b.LikesCount == null)
-            {
-                return 0;
-            }
-            else
-            {
-                return i_a.LikesCount.Value.CompareTo(i_b.LikesCount.Value);
-            }
-        }
         public static List<PictureBox> GetPictureBoxListWithData(Collection<DataUnit> i_DataUnits, eDataTypes i_DataType)
         {
             Collection<DataUnit> dummyList = DummyData.GetDummyDataList(i_DataType);
@@ -288,7 +277,7 @@ namespace BasicFacebookFeatures
                     string name = (string)item.GetType().GetProperty("Name").GetValue(item, null);
                     string link = null;
                     string picURL;
-                    int LikesCount = 0;
+                    int likesCount = 0;
                     DateTime comparedTime = DateTime.Now;
                     DateTime createdTime = comparedTime;
                     FacebookObjectCollection<User> tempCol;
@@ -302,28 +291,43 @@ namespace BasicFacebookFeatures
                             picURL = (string)item.GetType().GetProperty("PictureThumbURL").GetValue(item, null);
                             createdTime = (DateTime)item?.GetType().GetProperty("CreatedTime").GetValue(item, null);
                             tempCol = (FacebookObjectCollection<User>)item?.GetType().GetProperty("LikedBy").GetValue(item, null);
-                            LikesCount = tempCol.Count();
+                            likesCount = tempCol.Count();
                             break;
                         case "videos":
                             link = (string)item.GetType().GetProperty("Link").GetValue(item, null);
                             picURL = (string)item.GetType().GetProperty("PictureURL").GetValue(item, null);
                             createdTime = (DateTime)item?.GetType().GetProperty("CreatedTime").GetValue(item, null);
                             tempCol = (FacebookObjectCollection<User>)item?.GetType().GetProperty("LikedBy").GetValue(item, null);
-                            LikesCount = tempCol.Count();
+                            likesCount = tempCol.Count();
                             break;
                         case "pages":
                             link = (string)item.GetType().GetProperty("URL").GetValue(item, null);
                             var tempCount = item.GetType().GetProperty("LikesCount").GetValue(item, null);
-                            LikesCount = tempCount == null ? 0 : (int)tempCount;
+                            likesCount = tempCount == null ? -1 : (int)tempCount;
+                            break;
+                        case "friends":
+                            link = (string)item.GetType().GetProperty("Link").GetValue(item, null);
+                            picURL = (string)item.GetType().GetProperty("PictureNormalURL").GetValue(item, null);
+                            break;
+                        case "groups":
+                            link = (string)item.GetType().GetProperty("Link").GetValue(item, null);
+                            picURL = (string)item.GetType().GetProperty("PictureThumbURL").GetValue(item, null);
                             break;
                     }
                     if (createdTime != comparedTime)
                     {
-                        dataUnits.Add(new DataUnit(name, picURL, link, createdTime, LikesCount));
+                        dataUnits.Add(new DataUnit(name, picURL, link, createdTime, likesCount));
                     }
                     else
                     {
-                        dataUnits.Add(new DataUnit(name, picURL, link));
+                        if (likesCount >= 0)
+                        {
+                            dataUnits.Add(new DataUnit(name, picURL, link, likesCount));
+                        }
+                        else
+                        {
+                            dataUnits.Add(new DataUnit(name, picURL, link));
+                        }
                     }
 
                 }

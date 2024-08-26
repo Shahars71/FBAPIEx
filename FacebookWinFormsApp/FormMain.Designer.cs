@@ -67,8 +67,6 @@
             this.btnSortVidsByLikes = new System.Windows.Forms.Button();
             this.flpVideos = new System.Windows.Forms.FlowLayoutPanel();
             this.tabPages = new System.Windows.Forms.TabPage();
-            this.cmbSortOrderDatePages = new System.Windows.Forms.ComboBox();
-            this.btnSortByPagesByDate = new System.Windows.Forms.Button();
             this.cmbSortOrderLikesPages = new System.Windows.Forms.ComboBox();
             this.btnSortByPagesByLikes = new System.Windows.Forms.Button();
             this.flpPages = new System.Windows.Forms.FlowLayoutPanel();
@@ -218,7 +216,7 @@
             this.tabControlMain.Controls.Add(this.tabVideos);
             this.tabControlMain.Controls.Add(this.tabPages);
             this.tabControlMain.Controls.Add(this.tabGroups);
-            this.tabControlMain.ItemSize = new System.Drawing.Size(50, 30);
+            this.tabControlMain.ItemSize = new System.Drawing.Size(100, 30);
             this.tabControlMain.Location = new System.Drawing.Point(12, 119);
             this.tabControlMain.Name = "tabControlMain";
             this.tabControlMain.SelectedIndex = 0;
@@ -313,7 +311,7 @@
             this.flpPosts.AutoScroll = true;
             this.flpPosts.Location = new System.Drawing.Point(3, 58);
             this.flpPosts.Name = "flpPosts";
-            this.flpPosts.Size = new System.Drawing.Size(895, 361);
+            this.flpPosts.Size = new System.Drawing.Size(895, 377);
             this.flpPosts.TabIndex = 0;
             // 
             // tabPhotos
@@ -540,8 +538,6 @@
             // tabPages
             // 
             this.tabPages.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(147)))), ((int)(((byte)(193)))), ((int)(((byte)(244)))));
-            this.tabPages.Controls.Add(this.cmbSortOrderDatePages);
-            this.tabPages.Controls.Add(this.btnSortByPagesByDate);
             this.tabPages.Controls.Add(this.cmbSortOrderLikesPages);
             this.tabPages.Controls.Add(this.btnSortByPagesByLikes);
             this.tabPages.Controls.Add(this.flpPages);
@@ -551,30 +547,6 @@
             this.tabPages.Size = new System.Drawing.Size(901, 412);
             this.tabPages.TabIndex = 4;
             this.tabPages.Text = "Pages";
-            // 
-            // cmbSortOrderDatePages
-            // 
-            this.cmbSortOrderDatePages.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.cmbSortOrderDatePages.FormattingEnabled = true;
-            this.cmbSortOrderDatePages.Items.AddRange(new object[] {
-            "Ascending",
-            "Descending"});
-            this.cmbSortOrderDatePages.Location = new System.Drawing.Point(164, 41);
-            this.cmbSortOrderDatePages.Name = "cmbSortOrderDatePages";
-            this.cmbSortOrderDatePages.Size = new System.Drawing.Size(155, 21);
-            this.cmbSortOrderDatePages.Sorted = true;
-            this.cmbSortOrderDatePages.TabIndex = 16;
-            // 
-            // btnSortByPagesByDate
-            // 
-            this.btnSortByPagesByDate.Font = new System.Drawing.Font("Arial Rounded MT Bold", 15.75F);
-            this.btnSortByPagesByDate.Location = new System.Drawing.Point(164, 4);
-            this.btnSortByPagesByDate.Name = "btnSortByPagesByDate";
-            this.btnSortByPagesByDate.Size = new System.Drawing.Size(155, 36);
-            this.btnSortByPagesByDate.TabIndex = 15;
-            this.btnSortByPagesByDate.Text = "Sort By Date";
-            this.btnSortByPagesByDate.UseVisualStyleBackColor = true;
-            this.btnSortByPagesByDate.Click += new System.EventHandler(this.btnSortByPagesByDate_Click);
             // 
             // cmbSortOrderLikesPages
             // 
@@ -758,8 +730,6 @@
         private System.Windows.Forms.Button btnSortPhotosByDate;
         private System.Windows.Forms.ComboBox cmbSortOrderDateVids;
         private System.Windows.Forms.Button btnSortVidsByDate;
-        private System.Windows.Forms.ComboBox cmbSortOrderDatePages;
-        private System.Windows.Forms.Button btnSortByPagesByDate;
         private System.Windows.Forms.Label lblViewProfile;
         private System.Windows.Forms.PictureBox pbMasking;
     }
