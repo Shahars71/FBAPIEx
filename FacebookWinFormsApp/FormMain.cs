@@ -18,7 +18,6 @@ namespace BasicFacebookFeatures
 {
     public partial class FormMain : Form
     {
-        // $G$ CSS-016 (-5) explicit access modifiers missing.
         private UserFacade User { get; set; } = null;
         private List<PostViewer> Posts { get; set; }
         private List<PictureBox> Photos { get; set; }
@@ -38,7 +37,6 @@ namespace BasicFacebookFeatures
 
         public FormMain(User user)
         {
-            // $G$ CSS-016 (-5) constant values should be used instead of explicit values.
             object s_lockObj = new object();
 
             InitializeComponent();
